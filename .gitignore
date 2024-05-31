@@ -1,0 +1,58 @@
+# 컴파일된 바이너리 파일과 빌드 디렉토리
+/target/
+out/
+bin/
+
+# 로컬 환경 설정 파일
+/.classpath
+/.project
+/.settings/
+/.idea/
+/*.iml
+
+# Mac OS X와 같은 운영 체제에서 생성되는 시스템 파일
+.DS_Store
+
+# 로그 파일
+*.log
+
+# 잠금 파일
+*.lock
+
+# 임시 파일
+*.tmp
+
+# Maven 로컬 저장소
+/.mvn
+mvnw
+mvnw.cmd
+
+# Eclipse와 같은 IDE의 설정 파일
+/.classpath
+/.project
+/.settings/
+
+# IntelliJ IDEA 설정 파일
+/.idea/
+/*.iml
+
+# Lombok 설정 파일
+/lombok.config
+
+# 스프링 부트 애플리케이션 관련 설정 파일
+/*.env
+
+# 빌드 아티팩트
+*.jar
+*.war
+*.ear
+
+# node_modules 폴더 (프론트엔드 자산 관리)
+node_modules/
+
+# 빌드 출력물
+/dist/
+/build/
+
+# 기타 설정 파일
+/.vscode/

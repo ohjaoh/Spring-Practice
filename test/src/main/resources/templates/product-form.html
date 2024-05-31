@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add New Product</title>
+</head>
+<body>
+    <h1>Add New Product</h1>
+    <form th:action="@{/products}" th:object="${product}" method="post">
+        <label for="productName">Product Name:</label>
+        <input type="text" id="productName" th:field="*{productName}"><br>
+        <div th:if="${#fields.hasErrors('productName')}" th:errors="*{productName}"> <!-- 유효성 검사 오류 메시지 표시 --></div>
+        
+        <label for="productCost">Product Cost:</label>
+        <input type="text" id="productCost" th:field="*{productCost}"><br>
+        <div th:if="${#fields.hasErrors('productCost')}" th:errors="*{productCost}"> <!-- 유효성 검사 오류 메시지 표시 --></div>
+        
+        <label for="productCategory">Product Category:</label>
+        <input type="text" id="productCategory" th:field="*{productCategory}"><br>
+        <div th:if="${#fields.hasErrors('productCategory')}" th:errors="*{productCategory}"> <!-- 유효성 검사 오류 메시지 표시 --></div>
+        
+        <button type="submit">Save Product</button>
+    </form>
+    <button onclick="location.href='/'">Back to Home</button>
+</body>
+</html>
