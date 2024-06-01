@@ -1,19 +1,17 @@
 package com.test.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.bind.annotation.*;
 import com.test.entity.Product;
 import com.test.service.ProductService;
-
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 @Controller
@@ -22,51 +20,57 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/")
-    public String viewHomePage() {
-        return "index"; // index.html 뷰를 반환
+    @ModelAttribute
+    public void setNoCacheHeaders(HttpServletResponse response) {
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", 0);
+    }
+
+    @GetMapping("/product-management")
+    public String viewProductManagementPage() {
+        return "product-management";
     }
 
     @GetMapping("/product-form")
-    public String showProductForm(Model model) {
+    public String showProductForm(Model model, HttpSession session) {
         model.addAttribute("product", new Product());
-        return "product-form"; // product-form.html 뷰를 반환
+        session.setAttribute("visitedProductForm", true);
+        return "product-form";
     }
 
     @PostMapping("/products")
-    public String saveProduct(@Valid @ModelAttribute("product") Product product, BindingResult result, Model model) {
-        // @Valid: 유효성 검사를 수행
-        // BindingResult: 유효성 검사 결과를 담는 객체
+    public String saveProduct(@Valid @ModelAttribute("product") Product product, BindingResult result, Model model, HttpSession session) {
         if (result.hasErrors()) {
-            // 유효성 검사 오류가 있는 경우 다시 입력 폼으로 이동
             return "product-form";
         }
         productService.saveProduct(product);
-        return "redirect:/product-list"; // product-list.html로 리다이렉트
+        session.setAttribute("productSaved", true);
+        session.removeAttribute("visitedProductForm");
+        return "redirect:/product-list";
     }
 
     @GetMapping("/product-list")
-    public String viewProductList(Model model) {
+    public String viewProductList(Model model, HttpSession session) {
+        session.removeAttribute("productSaved");
         List<Product> products = productService.getAllProducts();
         model.addAttribute("products", products);
-        return "product-list"; // product-list.html 뷰를 반환
+        return "product-list";
     }
 
     @GetMapping("/product-edit/{id}")
-    public String showEditProductForm(@PathVariable("id") int id, Model model) {
+    public String showEditProductForm(@PathVariable("id") int id, Model model, HttpSession session) {
         Product product = productService.getProductById(id);
         model.addAttribute("product", product);
-        return "product-edit"; // product-edit.html 뷰를 반환
+        session.setAttribute("visitedEditForm", true);
+        return "product-edit";
     }
 
-    @PostMapping("/products/{id}")
-    public String updateProduct(@PathVariable("id") int id, @Valid @ModelAttribute("product") Product productDetails, BindingResult result, Model model) {
-        // @Valid: 유효성 검사를 수행
-        // BindingResult: 유효성 검사 결과를 담는 객체
+    @PutMapping("/products/{id}")
+    @ResponseBody
+    public ResponseEntity<String> updateProduct(@PathVariable("id") int id, @Valid @RequestBody Product productDetails, BindingResult result, HttpSession session) {
         if (result.hasErrors()) {
-            // 유효성 검사 오류가 있는 경우 다시 수정 폼으로 이동
-            model.addAttribute("product", productDetails);
-            return "product-edit";
+            return ResponseEntity.badRequest().body("Validation errors occurred");
         }
         Product product = productService.getProductById(id);
         if (product != null) {
@@ -74,7 +78,18 @@ public class ProductController {
             product.setProductCost(productDetails.getProductCost());
             product.setProductCategory(productDetails.getProductCategory());
             productService.saveProduct(product);
+            session.setAttribute("productUpdated", true);
+            session.removeAttribute("visitedEditForm");
+            return ResponseEntity.ok("Product updated successfully");
         }
-        return "redirect:/product-list";
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found");
+    }
+
+    @DeleteMapping("/products/{id}")
+    @ResponseBody
+    public ResponseEntity<String> deleteProduct(@PathVariable("id") int id, HttpSession session) {
+        productService.deleteProduct(id);
+        session.setAttribute("productDeleted", true);
+        return ResponseEntity.ok("Product deleted successfully");
     }
 }

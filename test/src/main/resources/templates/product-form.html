@@ -2,6 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Add New Product</title>
+    <script>
+        // 페이지가 로드될 때 현재 상태를 추가하여 뒤로 가기 시 경고 메시지 표시
+        window.onload = function() {
+            if (typeof history.pushState === "function") {
+                history.pushState(null, null, location.href);
+                window.onpopstate = function() {
+                    history.pushState(null, null, location.href);
+                    alert("You cannot go back to the previous page.");
+                };
+            }
+        };
+    </script>
 </head>
 <body>
     <h1>Add New Product</h1>
