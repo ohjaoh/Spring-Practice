@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <title>Index Page</title>
+	<title>Index Page</title>
 </head>
+
 <body>
-    <h1>Welcome to Product Management</h1>
-    <button onclick="location.href='/product-management'">Product Management</button>
+	<th:block th:replace="header :: header"></th:block>
+	<h1>Welcome to Product Management</h1>
+	<button onclick="location.href='/product-management'">Product Management</button>
+	<th:block th:replace="footer :: footer"></th:block>
 </body>
+
 </html>

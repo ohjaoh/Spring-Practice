@@ -1,37 +1,125 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <title>Add New Product</title>
-    <script>
-        // 페이지가 로드될 때 현재 상태를 추가하여 뒤로 가기 시 경고 메시지 표시
-        window.onload = function() {
-            if (typeof history.pushState === "function") {
-                history.pushState(null, null, location.href);
-                window.onpopstate = function() {
-                    history.pushState(null, null, location.href);
-                    alert("You cannot go back to the previous page.");
-                };
-            }
-        };
-    </script>
+	<title>Add New Product</title>
+	<style>
+		body {
+			display: flex;
+			justify-content: flex-start;
+			/* 위쪽에 정렬 */
+			align-items: center;
+			height: 100vh;
+			margin: 0;
+			flex-direction: column;
+			padding-top: 50px;
+			/* 원하는 만큼 여백을 추가 */
+			background-color: #f0fff0;
+			/* 연두색 배경 */
+		}
+
+		h1 {
+			color: #3cb371;
+			/* 연두색 제목 */
+		}
+
+		form {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			border: 1px solid #3cb371;
+			padding: 20px;
+			border-radius: 10px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			background-color: #ffffff;
+		}
+
+		.form-group {
+			display: flex;
+			align-items: center;
+			margin: 10px 0;
+			width: 100%;
+		}
+
+		label {
+			width: 150px;
+			margin-right: 10px;
+			color: #3cb371;
+			/* 연두색 라벨 */
+		}
+
+		input,
+		select {
+			width: 100%;
+			max-width: 300px;
+			padding: 10px;
+			border: 1px solid #3cb371;
+			border-radius: 5px;
+		}
+
+		button {
+			width: auto;
+			align-self: center;
+			padding: 10px 20px;
+			background-color: #3cb371;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: background-color 0.3s;
+		}
+
+		button:hover {
+			background-color: #2e8b57;
+			/* 버튼 호버 시 더 어두운 연두색 */
+		}
+	</style>
+	<script>
+		// 페이지가 로드될 때 현재 상태를 추가하여 뒤로 가기 시 경고 메시지 표시
+		window.onload = function () {
+			if (typeof history.pushState === "function") {
+				history.pushState(null, null, location.href);
+				window.onpopstate = function () {
+					history.pushState(null, null, location.href);
+					alert("You cannot go back to the previous page.");
+				};
+			}
+		};
+	</script>
 </head>
+
 <body>
-    <h1>Add New Product</h1>
-    <form th:action="@{/products}" th:object="${product}" method="post">
-        <label for="productName">Product Name:</label>
-        <input type="text" id="productName" th:field="*{productName}"><br>
-        <div th:if="${#fields.hasErrors('productName')}" th:errors="*{productName}"> <!-- 유효성 검사 오류 메시지 표시 --></div>
-        
-        <label for="productCost">Product Cost:</label>
-        <input type="text" id="productCost" th:field="*{productCost}"><br>
-        <div th:if="${#fields.hasErrors('productCost')}" th:errors="*{productCost}"> <!-- 유효성 검사 오류 메시지 표시 --></div>
-        
-        <label for="productCategory">Product Category:</label>
-        <input type="text" id="productCategory" th:field="*{productCategory}"><br>
-        <div th:if="${#fields.hasErrors('productCategory')}" th:errors="*{productCategory}"> <!-- 유효성 검사 오류 메시지 표시 --></div>
-        
-        <button type="submit">Save Product</button>
-    </form>
-    <button onclick="location.href='/'">Back to Home</button>
+	<th:block th:replace="header :: header"></th:block>
+	<h1>새상품추가하기~</h1>
+	<form th:action="@{/products}" th:object="${product}" method="post">
+		<div class="form-group">
+			<label for="productName">상품명:</label>
+			<input type="text" id="productName" th:field="*{productName}">
+		</div>
+		<div th:if="${#fields.hasErrors('productName')}" th:errors="*{productName}"> <!-- 유효성 검사 오류 메시지 표시 --></div>
+
+		<div class="form-group">
+			<label for="productCost">상품가격:</label>
+			<input type="text" id="productCost" th:field="*{productCost}">
+		</div>
+		<div th:if="${#fields.hasErrors('productCost')}" th:errors="*{productCost}"> <!-- 유효성 검사 오류 메시지 표시 --></div>
+
+		<div class="form-group">
+			<label for="productCategory">상품종류:</label>
+			<select id="productCategory" th:field="*{productCategory}">
+				<option value="전자제품">전자제품</option>
+				<option value="생필품">생필품</option>
+				<option value="책">책</option>
+				<option value="음료">음료</option>
+			</select>
+		</div>
+		<div th:if="${#fields.hasErrors('productCategory')}" th:errors="*{productCategory}"> <!-- 유효성 검사 오류 메시지 표시 -->
+		</div>
+
+		<button type="submit">Save</button>
+	</form>
+	<button onclick="location.href='/'">홈으로</button>
+	<th:block th:replace="footer :: footer"></th:block>
 </body>
+
 </html>

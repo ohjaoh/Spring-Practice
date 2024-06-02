@@ -1,57 +1,63 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Edit Product</title>
-    <script>
-        function submitEditForm() {
-            const form = document.getElementById('editForm');
-            const data = new FormData(form);
-            const object = {};
-            data.forEach((value, key) => object[key] = value);
-            const json = JSON.stringify(object);
 
-            fetch(form.action, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: json
-            }).then(response => {
-                if (response.ok) {
-                    response.text().then(text => {
-                        alert(text);
-                        window.location.href = '/product-list';
-                    });
-                } else {
-                    response.text().then(text => {
-                        alert('Failed to update the product: ' + text);
-                    });
-                }
-            }).catch(error => {
-                console.error('Error:', error);
-                alert('Failed to update the product.');
-            });
-        }
-    </script>
+<head>
+	<title>Edit Product</title>
+	<script>
+		function submitEditForm() {
+			const form = document.getElementById('editForm');
+			const data = new FormData(form);
+			const object = {};
+			data.forEach((value, key) => object[key] = value);
+			const json = JSON.stringify(object);
+
+			fetch(form.action, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: json
+			}).then(response => {
+				if (response.ok) {
+					response.text().then(text => {
+						alert(text);
+						window.location.href = '/product-list';
+					});
+				} else {
+					response.text().then(text => {
+						alert('Failed to update the product: ' + text);
+					});
+				}
+			}).catch(error => {
+				console.error('Error:', error);
+				alert('Failed to update the product.');
+			});
+		}
+	</script>
 </head>
+
 <body>
-    <h1>Edit Product</h1>
-    <form id="editForm" th:action="@{/products/{id}(id=${product.productCode})}" th:object="${product}" method="post">
-        <input type="hidden" th:field="*{productCode}"/>
-        <label for="productName">Product Name:</label>
-        <input type="text" id="productName" th:field="*{productName}"><br>
-        <div th:if="${#fields.hasErrors('productName')}" th:errors="*{productName}"> <!-- 유효성 검사 오류 메시지 표시 --></div>
-        
-        <label for="productCost">Product Cost:</label>
-        <input type="text" id="productCost" th:field="*{productCost}"><br>
-        <div th:if="${#fields.hasErrors('productCost')}" th:errors="*{productCost}"> <!-- 유효성 검사 오류 메시지 표시 --></div>
-        
-        <label for="productCategory">Product Category:</label>
-        <input type="text" id="productCategory" th:field="*{productCategory}"><br>
-        <div th:if="${#fields.hasErrors('productCategory')}" th:errors="*{productCategory}"> <!-- 유효성 검사 오류 메시지 표시 --></div>
-        
-        <button type="button" onclick="submitEditForm()">Save Product</button>
-    </form>
-    <button onclick="location.href='/'">Back to Home</button>
+	<th:block th:replace="header :: header"></th:block>
+	<h1>Edit Product</h1>
+	<form id="editForm" th:action="@{/products/{id}(id=${product.productCode})}" th:object="${product}" method="post">
+		<input type="hidden" th:field="*{productCode}" />
+		<label for="productName">Product Name:</label>
+		<input type="text" id="productName" th:field="*{productName}"><br>
+		<div th:if="${#fields.hasErrors('productName')}" th:errors="*{productName}"> <!-- 유효성 검사 오류 메시지 표시 --></div>
+
+		<label for="productCost">Product Cost:</label>
+		<input type="text" id="productCost" th:field="*{productCost}"><br>
+		<div th:if="${#fields.hasErrors('productCost')}" th:errors="*{productCost}"> <!-- 유효성 검사 오류 메시지 표시 --></div>
+
+		<label for="productCategory">Product Category:</label>
+		<input type="text" id="productCategory" th:field="*{productCategory}"><br>
+		<div th:if="${#fields.hasErrors('productCategory')}" th:errors="*{productCategory}"> <!-- 유효성 검사 오류 메시지 표시 -->
+		</div>
+
+		<button type="button" onclick="submitEditForm()">Save Product</button>
+	</form>
+	<button onclick="location.href='/'">Back to Home</button>
+	<th:block th:replace="footer :: footer"></th:block>
 </body>
+
 </html>
