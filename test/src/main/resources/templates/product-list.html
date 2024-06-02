@@ -62,10 +62,22 @@
 			/* 동일한 글자 크기 설정 */
 		}
 
-		.button:hover {
-			background-color: #45a049;
+		button {
+			width: auto;
+			align-self: center;
+			padding: 10px 20px;
+			background-color: #3cb371;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: background-color 0.3s;
 		}
 
+		button:hover {
+			background-color: #2e8b57;
+			/* 버튼 호버 시 더 어두운 연두색 */
+		}
 
 		form {
 			display: inline;
@@ -80,6 +92,12 @@
 					alert("You cannot go back to the previous page.");
 				});
 			}
+
+			// 상품 가격에 "원" 추가 및 소수점 제거
+			document.querySelectorAll('.product-cost').forEach(function (element) {
+				let cost = parseFloat(element.textContent);
+				element.textContent = cost.toFixed(0) + ' 원';
+			});
 		};
 	</script>
 </head>
@@ -90,30 +108,31 @@
 	<table>
 		<thead>
 			<tr>
-				<th>Product Code</th>
-				<th>Product Name</th>
-				<th>Product Cost</th>
-				<th>Product Category</th>
-				<th>Actions</th>
+				<th>상품코드</th>
+				<th>상품명</th>
+				<th>상품가격</th>
+				<th>상품종류</th>
+				<th>액션</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr th:each="product : ${products}">
-				<td th:text="${product.productCode}">Product Code</td>
-				<td th:text="${product.productName}">Product Name</td>
-				<td th:text="${product.productCost}">Product Cost</td>
-				<td th:text="${product.productCategory}">Product Category</td>
+				<td th:text="${product.productCode}">상품코드</td>
+				<td th:text="${product.productName}">상품명</td>
+				<td class="product-cost" th:text="${product.productCost}">상품가격</td>
+				<td th:text="${product.productCategory}">상품종류</td>
 				<td>
 					<a th:href="@{/product-edit/{id}(id=${product.productCode})}" class="button">수정</a> |
 					<form th:action="@{/products/{id}(id=${product.productCode})}" method="post">
 						<input type="hidden" name="_method" value="delete" />
 						<button type="submit" class="button"
-							onclick="return confirm('Are you sure you want to delete this product?');">삭제</button>
+							onclick="return confirm('정말 이 상품을 삭제하시겠습니까?');">삭제</button>
 					</form>
 				</td>
 			</tr>
 		</tbody>
 	</table>
+	<button onclick="location.href='/'">홈으로</button>
 	<th:block th:replace="footer :: footer"></th:block>
 </body>
 

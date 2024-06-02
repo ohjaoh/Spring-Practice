@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>Product Management</title>
+    <title>Index Page</title>
     <style>
         body {
             display: flex;
@@ -37,7 +37,6 @@
             text-decoration: none; /* 버튼의 텍스트 밑줄 제거 */
             display: inline-block;
             text-align: center;
-            margin: 10px; /* 버튼 간격 조정 */
         }
 
         .button:hover {
@@ -48,9 +47,8 @@
 
 <body>
 	<th:block th:replace="header :: header"></th:block>
-	<h1>Product Management</h1>
-	<button class="button" onclick="location.href='/product-form'">Add New Product</button>
-	<button class="button" onclick="location.href='/product-list'">View Products</button>
+    <h1>Welcome to Product Management</h1>
+    <a href="/product-management" class="button">Product Management</a>
 	<th:block th:replace="footer :: footer"></th:block>
 </body>
 
