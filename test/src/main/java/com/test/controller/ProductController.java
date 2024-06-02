@@ -20,6 +20,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    // 모든 요청에 대해 캐시를 비활성화하는 헤더를 설정합니다.
     @ModelAttribute
     public void setNoCacheHeaders(HttpServletResponse response) {
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -27,11 +28,13 @@ public class ProductController {
         response.setDateHeader("Expires", 0);
     }
 
+    // 제품 관리 페이지를 반환합니다.
     @GetMapping("/product-management")
     public String viewProductManagementPage() {
         return "product-management";
     }
 
+    // 제품 입력 폼을 보여줍니다.
     @GetMapping("/product-form")
     public String showProductForm(Model model, HttpSession session) {
         model.addAttribute("product", new Product());
@@ -39,6 +42,7 @@ public class ProductController {
         return "product-form";
     }
 
+    // 새로운 제품을 저장합니다.
     @PostMapping("/products")
     public String saveProduct(@Valid @ModelAttribute("product") Product product, BindingResult result, Model model, HttpSession session) {
         if (result.hasErrors()) {
@@ -50,6 +54,7 @@ public class ProductController {
         return "redirect:/product-list";
     }
 
+    // 제품 목록을 보여줍니다.
     @GetMapping("/product-list")
     public String viewProductList(Model model, HttpSession session) {
         session.removeAttribute("productSaved");
@@ -58,6 +63,7 @@ public class ProductController {
         return "product-list";
     }
 
+    // 제품 수정 폼을 보여줍니다.
     @GetMapping("/product-edit/{id}")
     public String showEditProductForm(@PathVariable("id") int id, Model model, HttpSession session) {
         Product product = productService.getProductById(id);
@@ -66,6 +72,7 @@ public class ProductController {
         return "product-edit";
     }
 
+    // 제품 정보를 업데이트합니다.
     @PutMapping("/products/{id}")
     @ResponseBody
     public ResponseEntity<String> updateProduct(@PathVariable("id") int id, @Valid @RequestBody Product productDetails, BindingResult result, HttpSession session) {
@@ -85,6 +92,7 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found");
     }
 
+    // 제품을 삭제합니다.
     @DeleteMapping("/products/{id}")
     @ResponseBody
     public ResponseEntity<String> deleteProduct(@PathVariable("id") int id, HttpSession session) {
