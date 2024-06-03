@@ -22,8 +22,8 @@
 
 1. 리포지토리를 클론합니다:
     ```bash
-    git clone https://github.com/yourusername/product-management-system.git
-    cd product-management-system
+    git clone https://github.com/ohjaoh/Spring-Practice.git
+    cd Spring-Practice
     ```
 
 2. 데이터베이스를 설정합니다:
