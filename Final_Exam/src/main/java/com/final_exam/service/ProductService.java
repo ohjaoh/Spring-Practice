@@ -1,12 +1,12 @@
-package com.test.service;
+package com.final_exam.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.test.entity.Product;
-import com.test.repository.ProductRepository;
+import com.final_exam.entity.Product;
+import com.final_exam.repository.ProductRepository;
 
 @Service
 public class ProductService {

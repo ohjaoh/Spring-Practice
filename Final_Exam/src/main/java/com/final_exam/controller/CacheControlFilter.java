@@ -1,4 +1,4 @@
-package com.test.controller;
+package com.final_exam.controller;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
