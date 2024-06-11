@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Edit Custom Order</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #f0fff0, #c9fdd7); /* 밝은 연두색 그라데이션 배경 */
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #32cd32; /* 연두색 제목 */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            border: 1px solid #32cd32;
+            padding: 30px; /* 패딩을 늘려서 더 큰 카드뷰 */
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.8); /* 약간의 투명도 */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px); /* 글래스모피즘 효과 */
+            margin-bottom: 20px;
+            max-width: 500px; /* 카드뷰 최대 너비 설정 */
+            width: 100%;
+        }
+
+        .form-group {
+            display: flex;
+            justify-content: flex-start; /* 왼쪽 정렬 */
+            align-items: center;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        label {
+            color: #32cd32;
+            margin-right: 10px;
+            min-width: 100px; /* 라벨의 최소 너비를 설정하여 입력창과의 간격을 조정 */
+        }
+
+        input, select {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #32cd32;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.8); /* 약간의 투명도 */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 12px 12px;
+        }
+
+        .button {
+            padding: 10px 20px; /* 원래대로 돌린 저장 버튼 */
+            font-size: 1em; /* 원래 크기 */
+            color: white;
+            background-color: #32cd32; /* 연두색 */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            align-self: center; /* 버튼을 중앙으로 배치 */
+            margin-top: 10px;
+        }
+
+        .button:hover {
+            background-color: #2e8b57; /* 어두운 연두색 */
+        }
+
+        .home-button {
+            margin-top: 30px; /* 폼과의 간격을 추가 */
+            padding: 15px 30px; /* 홈으로 버튼 크기 증가 */
+            font-size: 1.2em; /* 홈으로 버튼 폰트 크기 증가 */
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Custom Order Edit</h1>
+    <form th:action="@{/custom-orders/{id}(id=${customOrder.id})}" th:object="${customOrder}" method="post">
+        <div class="form-group">
+            <label for="productCode">Product Code:</label>
+            <input type="text" id="productCode" th:field="*{productCode}">
+        </div>
+        <div th:if="${#fields.hasErrors('productCode')}" th:errors="*{productCode}"> <!-- 유효성 검사 오류 메시지 표시 --></div>
+
+        <div class="form-group">
+            <label for="customizationDetails">Customization Details:</label>
+            <input type="text" id="customizationDetails" th:field="*{customizationDetails}">
+        </div>
+        <div th:if="${#fields.hasErrors('customizationDetails')}" th:errors="*{customizationDetails}"> <!-- 유효성 검사 오류 메시지 표시 --></div>
+
+        <div class="form-group">
+            <label for="deliveryDate">Delivery Date:</label>
+            <input type="date" id="deliveryDate" th:field="*{deliveryDate}">
+        </div>
+        <div th:if="${#fields.hasErrors('deliveryDate')}" th:errors="*{deliveryDate}"> <!-- 유효성 검사 오류 메시지 표시 --></div>
+
+        <div class="form-group">
+            <label for="specialInstructions">Special Instructions:</label>
+            <input type="text" id="specialInstructions" th:field="*{specialInstructions}">
+        </div>
+        <div th:if="${#fields.hasErrors('specialInstructions')}" th:errors="*{specialInstructions}"> <!-- 유효성 검사 오류 메시지 표시 --></div>
+
+        <button type="submit" class="button">Save Custom Order</button>
+    </form>
+    <button onclick="location.href='/'" class="button home-button">Home</button>
+</body>
+
+</html>

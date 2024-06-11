@@ -49,7 +49,6 @@ public class ProductController {
 	@GetMapping("/product-form")
 	public String showProductForm(Model model, HttpSession session) {
 		model.addAttribute("product", new Product());
-		
 		session.setAttribute("visitedProductForm", true);
 		return "product-form";
 	}
@@ -123,7 +122,6 @@ public class ProductController {
 	    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found");
 	}
 
-
 	// 제품을 삭제합니다.
 	@DeleteMapping("/products/{id}")
 	public void deleteProduct(@PathVariable("id") int id, HttpSession session, HttpServletResponse response)
@@ -132,5 +130,4 @@ public class ProductController {
 		session.setAttribute("productDeleted", true);
 		response.sendRedirect("/product-list");
 	}
-
 }

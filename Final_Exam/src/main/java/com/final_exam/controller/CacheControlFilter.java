@@ -31,6 +31,6 @@ public class CacheControlFilter implements Filter {
 
     private boolean isCacheExempt(String requestURI) {
         // 캐시 예외 처리를 할 URL 패턴 정의
-        return requestURI.startsWith("/index") ;
+        return requestURI.startsWith("/index") || requestURI.startsWith("/custom-orders/list") || requestURI.startsWith("/product-list");
     }
 }

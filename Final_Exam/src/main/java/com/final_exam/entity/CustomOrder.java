@@ -2,6 +2,8 @@ package com.final_exam.entity;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -30,8 +33,10 @@ public class CustomOrder {
 	private String customizationDetails;
 
 	@Column(name = "delivery_date")
-	@NotNull(message = "Delivery date is required")
-	private Date deliveryDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Delivery date is required")
+    @FutureOrPresent(message = "Delivery date must be today or in the future")
+    private Date deliveryDate;
 
 	@Column(name = "special_instructions")
 	private String specialInstructions;

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Index Page</title>
+    <title>Custom Order Management</title>
     <style>
         body {
             display: flex;
@@ -37,6 +37,7 @@
             text-decoration: none; /* 버튼의 텍스트 밑줄 제거 */
             display: inline-block;
             text-align: center;
+            margin: 10px; /* 버튼 간격 조정 */
         }
 
         .button:hover {
@@ -47,9 +48,10 @@
 
 <body>
     <th:block th:replace="header :: header"></th:block>
-    <h1>Welcome to Management System</h1>
-    <a href="/product-management" class="button">Product Management</a>
-    <a href="/custom-orders-management" class="button">Custom Orders</a> <!-- Custom Orders 페이지로 이동 -->
+    <h1>Custom Order Management</h1>
+    
+    <button class="button" onclick="location.href='/custom-orders'">View Custom Orders</button>
+    <button class="button" onclick="location.href='/custom-orders/new'">Add New Custom Order</button>
     <th:block th:replace="footer :: footer"></th:block>
 </body>
 
