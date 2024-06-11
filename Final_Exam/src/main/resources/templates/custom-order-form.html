@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Add Custom Order</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+            padding-top: 50px;
+            background-color: #f0fff0;
+        }
+
+        h1 {
+            color: #3cb371;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            border: 1px solid #3cb371;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+        }
+
+        .form-group {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            width: 100%;
+        }
+
+        label {
+            width: 150px;
+            margin-right: 10px;
+            color: #3cb371;
+        }
+
+        input, select {
+            width: 100%;
+            max-width: 300px;
+            padding: 10px;
+            border: 1px solid #3cb371;
+            border-radius: 5px;
+        }
+
+        .error {
+            color: red;
+            font-size: 0.8em;
+        }
+
+        button {
+            width: auto;
+            align-self: center;
+            padding: 10px 20px;
+            background-color: #3cb371;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #2e8b57;
+        }
+    </style>
+</head>
+
+<body>
+    <th:block th:replace="header :: header"></th:block>
+    <h1>새 맞춤 주문 추가하기</h1>
+    <form th:action="@{/custom-orders}" th:object="${customOrder}" method="post">
+        <div class="form-group">
+            <label for="productCode">상품코드:</label>
+            <select id="productCode" th:field="*{product_code.productCode}">
+                <option th:each="product : ${products}" th:value="${product.productCode}" th:text="${product.productName}">상품명</option>
+            </select>
+            <div class="error" th:if="${#fields.hasErrors('product_code')}" th:errors="*{product_code}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="customizationDetails">맞춤 세부사항:</label>
+            <input type="text" id="customizationDetails" th:field="*{customizationDetails}">
+            <div class="error" th:if="${#fields.hasErrors('customizationDetails')}" th:errors="*{customizationDetails}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="deliveryDate">배송 날짜:</label>
+            <input type="date" id="deliveryDate" th:field="*{deliveryDate}">
+            <div class="error" th:if="${#fields.hasErrors('deliveryDate')}" th:errors="*{deliveryDate}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="specialInstructions">특별 지시사항:</label>
+            <input type="text" id="specialInstructions" th:field="*{specialInstructions}">
+            <div class="error" th:if="${#fields.hasErrors('specialInstructions')}" th:errors="*{specialInstructions}"></div>
+        </div>
+
+        <button type="submit">Save Order</button>
+    </form>
+    <button onclick="location.href='/'">홈으로</button>
+    <th:block th:replace="footer :: footer"></th:block>
+</body>
+
+</html>

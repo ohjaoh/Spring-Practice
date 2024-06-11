@@ -1,5 +1,8 @@
 package com.final_exam.entity;
 
+import java.util.Date;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -7,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Entity
@@ -16,15 +20,60 @@ public class CustomOrder {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int serial_no;
-	
-	// 외래 키로 상품 코드를 가져옴
+
 	@ManyToOne
 	@JoinColumn(name = "product_code", referencedColumnName = "productCode")
+	@NotNull(message = "Product code is required")
 	private Product product_code;
-	// @JoinColumn: 외래 키 설정
-    // name: 이 엔티티의 외래 키 컬럼명을 지정 (여기서는 "product_code")
-    // referencedColumnName: 참조할 대상 엔티티의 기본 키 컬럼명을 지정 (여기서는 Product 엔티티의 "productCode")
 
-	//나중에 회원정보도 가져올것 + 자체적인 필드가 필요할듯?
+	@Column(name = "customization_details")
+	private String customizationDetails;
 
+	@Column(name = "delivery_date")
+	@NotNull(message = "Delivery date is required")
+	private Date deliveryDate;
+
+	@Column(name = "special_instructions")
+	private String specialInstructions;
+
+	// 수동으로 추가한 getter 및 setter
+	public int getSerial_no() {
+		return serial_no;
+	}
+
+	public void setSerial_no(int serial_no) {
+		this.serial_no = serial_no;
+	}
+
+	public Product getProduct_code() {
+		return product_code;
+	}
+
+	public void setProduct_code(Product product_code) {
+		this.product_code = product_code;
+	}
+
+	public String getCustomizationDetails() {
+		return customizationDetails;
+	}
+
+	public void setCustomizationDetails(String customizationDetails) {
+		this.customizationDetails = customizationDetails;
+	}
+
+	public Date getDeliveryDate() {
+		return deliveryDate;
+	}
+
+	public void setDeliveryDate(Date deliveryDate) {
+		this.deliveryDate = deliveryDate;
+	}
+
+	public String getSpecialInstructions() {
+		return specialInstructions;
+	}
+
+	public void setSpecialInstructions(String specialInstructions) {
+		this.specialInstructions = specialInstructions;
+	}
 }
