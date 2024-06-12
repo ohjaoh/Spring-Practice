@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Index Page</title>
+    <title>Member Management</title>
     <style>
         body {
             display: flex;
@@ -11,13 +11,13 @@
             justify-content: center;
             height: 100vh;
             margin: 0;
-            background: linear-gradient(135deg, #f0fff0, #c9fdd7);
+            background: linear-gradient(135deg, #f0fff0, #c9fdd7); /* 밝은 연두색 그라데이션 배경 */
             font-family: Arial, sans-serif;
         }
 
         h1 {
             font-size: 2.5em;
-            color: #32cd32;
+            color: #32cd32; /* 연두색 제목 */
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
             margin-bottom: 20px;
         }
@@ -26,43 +26,32 @@
             padding: 15px 30px;
             font-size: 1.2em;
             color: white;
-            background-color: rgba(144, 238, 144, 0.8);
+            background-color: rgba(144, 238, 144, 0.8); /* 반투명한 밝은 연두색 */
             border: none;
             border-radius: 10px;
             cursor: pointer;
             transition: background-color 0.3s;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px); /* 글래스모피즘 효과 */
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             margin-top: 20px;
-            text-decoration: none;
+            text-decoration: none; /* 버튼의 텍스트 밑줄 제거 */
             display: inline-block;
             text-align: center;
+            margin: 10px; /* 버튼 간격 조정 */
         }
 
         .button:hover {
-            background-color: rgba(102, 205, 170, 0.8);
-        }
-
-        .welcome {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            font-size: 1.2em;
-            color: #32cd32;
+            background-color: rgba(102, 205, 170, 0.8); /* 호버 시 더 어두운 연두색 */
         }
     </style>
 </head>
 
 <body>
     <th:block th:replace="header :: header"></th:block>
-    <div th:if="${user != null}" class="welcome">
-        <span th:text="${user.name} + '님 안녕하세요'"></span>
-    </div>
-    <h1>Welcome to Management System</h1>
-    <a href="/product-management" class="button">Product Management</a>
-    <a href="/custom-orders-management" class="button">Custom Orders</a>
-    <a href="/member-management" class="button">Member Management</a>
-    <a href="/login" class="button">Login</a> <!-- 로그인 페이지로 이동 -->
+    <h1>Member Management</h1>
+    
+    <button class="button" onclick="location.href='/member-list'">View Members</button>
+    <button class="button" onclick="location.href='/member-form'">Add New Member</button>
     <th:block th:replace="footer :: footer"></th:block>
 </body>
 
