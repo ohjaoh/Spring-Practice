@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Custom Order Form</title>
+    <title> Order Form</title>
     <style>
         /* Your existing CSS */
         body {
@@ -59,9 +59,9 @@
 </head>
 <body>
     <th:block th:replace="~{header :: header}"></th:block>
-    <h1>맞춤 주문 폼</h1>
+    <h1>주문 폼</h1>
 
-    <form th:action="@{/custom-orders}" th:object="${customOrder}" method="post">
+    <form th:action="@{/orders}" th:object="${Order}" method="post">
         <div class="form-group">
             <label for="productCode">상품코드:</label>
             <select id="productCode" th:field="*{product_code.productCode}">
@@ -71,21 +71,9 @@
         </div>
 
         <div class="form-group">
-            <label for="customizationDetails">맞춤 세부사항:</label>
-            <input type="text" id="customizationDetails" th:field="*{customizationDetails}">
-            <div class="error" th:if="${#fields.hasErrors('customizationDetails')}" th:errors="*{customizationDetails}"></div>
-        </div>
-
-        <div class="form-group">
             <label for="deliveryDate">배송 날짜:</label>
             <input type="date" id="deliveryDate" th:field="*{deliveryDate}">
             <div class="error" th:if="${#fields.hasErrors('deliveryDate')}" th:errors="*{deliveryDate}"></div>
-        </div>
-
-        <div class="form-group">
-            <label for="specialInstructions">특별 지시사항:</label>
-            <input type="text" id="specialInstructions" th:field="*{specialInstructions}">
-            <div class="error" th:if="${#fields.hasErrors('specialInstructions')}" th:errors="*{specialInstructions}"></div>
         </div>
 
         <div class="form-group">

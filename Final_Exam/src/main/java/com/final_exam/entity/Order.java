@@ -24,44 +24,78 @@ import lombok.Data;
 @Data
 public class Order {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int serial_no;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int serial_no;
 
-	@ManyToOne
-	@JoinColumn(name = "product_code", referencedColumnName = "productCode")
-	@NotNull(message = "Product code is required")
-	private Product product_code;
+    @ManyToOne
+    @JoinColumn(name = "product_code", referencedColumnName = "productCode")
+    @NotNull(message = "Product code is required")
+    private Product product_code;
 
-	@Column(name = "delivery_date")
+    @ManyToOne
+    @JoinColumn(name = "member_id", referencedColumnName = "user_no")
+    @NotNull(message = "Member is required")
+    private Member member;
+
+    @Column(name = "delivery_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Delivery date is required")
     @FutureOrPresent(message = "Delivery date must be today or in the future")
     private Date deliveryDate;
 
-	// 수동으로 추가한 getter 및 setter
-	public int getSerial_no() {
-		return serial_no;
-	}
+    @Column(name = "order_name")
+    private String orderName;
 
-	public void setSerial_no(int serial_no) {
-		this.serial_no = serial_no;
-	}
+    @Column(name = "order_phone_number")
+    private String orderPhoneNumber;
 
-	public Product getProduct_code() {
-		return product_code;
-	}
+    @Column(name = "order_address")
+    private String orderAddress;
 
-	public void setProduct_code(Product product_code) {
-		this.product_code = product_code;
-	}
+    // 수동으로 추가한 getter 및 setter
+    public int getSerial_no() {
+        return serial_no;
+    }
 
+    public void setSerial_no(int serial_no) {
+        this.serial_no = serial_no;
+    }
 
-	public Date getDeliveryDate() {
-		return deliveryDate;
-	}
+    public Product getProduct_code() {
+        return product_code;
+    }
 
-	public void setDeliveryDate(Date deliveryDate) {
-		this.deliveryDate = deliveryDate;
-	}
+    public void setProduct_code(Product product_code) {
+        this.product_code = product_code;
+    }
 
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+        this.orderName = member.getRealName(); // 회원의 이름을 주문자 이름으로 설정
+        this.orderPhoneNumber = member.getPhoneNumber(); // 회원의 전화번호를 주문자 전화번호로 설정
+        this.orderAddress = member.getAddress(); // 회원의 주소를 주문자 주소로 설정
+    }
+
+    public Date getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public void setDeliveryDate(Date deliveryDate) {
+        this.deliveryDate = deliveryDate;
+    }
+    public String getOrderName() {
+        return orderName;
+    }
+
+    public String getOrderPhoneNumber() {
+        return orderPhoneNumber;
+    }
+
+    public String getOrderAddress() {
+        return orderAddress;
+    }
 }

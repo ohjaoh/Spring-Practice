@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title> Order List</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			min-height: 100vh;
+			margin: 0;
+			background: linear-gradient(135deg, #f0fff0, #c9fdd7);
+			padding: 20px;
+		}
+
+		h1 {
+			margin-bottom: 20px;
+			color: #32cd32;
+			text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+		}
+
+		table {
+			width: 80%;
+			border-collapse: collapse;
+			margin-bottom: 20px;
+			background: rgba(255, 255, 255, 0.8);
+			backdrop-filter: blur(10px);
+			border-radius: 10px;
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		}
+
+		th,
+		td {
+			padding: 10px;
+			text-align: left;
+			border-bottom: 1px solid #ddd;
+		}
+
+		th {
+			background-color: #4CAF50;
+			color: white;
+		}
+
+		tr:nth-child(even) {
+			background-color: rgba(240, 255, 240, 0.8);
+		}
+
+		tr:nth-child(odd) {
+			background-color: rgba(230, 255, 230, 0.8);
+		}
+
+		.button {
+			padding: 10px 20px;
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			border-radius: 10px;
+			cursor: pointer;
+			transition: background-color 0.3s, box-shadow 0.3s;
+			text-decoration: none;
+			display: inline-block;
+			margin: 5px 0;
+			font-size: 14px;
+			box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1), -4px -4px 10px rgba(255, 255, 255, 0.7);
+		}
+
+		.button:hover {
+			background-color: #45a049;
+			box-shadow: inset 4px 4px 10px rgba(0, 0, 0, 0.1), inset -4px -4px 10px rgba(255, 255, 255, 0.7);
+		}
+
+		.button.delete {
+			background-color: #f44336;
+		}
+
+		.button.delete:hover {
+			background-color: #e53935;
+		}
+
+		button {
+			width: auto;
+			align-self: center;
+			padding: 10px 20px;
+			background-color: #3cb371;
+			color: white;
+			border: none;
+			border-radius: 10px;
+			cursor: pointer;
+			transition: background-color 0.3s;
+			box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1), -4px -4px 10px rgba(255, 255, 255, 0.7);
+		}
+
+		button:hover {
+			background-color: #2e8b57;
+		}
+
+		form {
+			display: inline;
+		}
+	</style>
+	<script>
+		window.onload = function () {
+			if (typeof history.pushState === "function") {
+				history.pushState(null, null, document.URL);
+				window.addEventListener('popstate', function (event) {
+					history.pushState(null, null, document.URL);
+					alert("You cannot go back to the previous page.");
+				});
+			}
+		};
+	</script>
+</head>
+
+<body>
+	<th:block th:replace="~{header :: header}"></th:block>
+	<h1> Order List</h1>
+	<table>
+		<thead>
+			<tr>
+				<th>주문번호</th>
+				<th>상품명</th>
+				<th>맞춤 세부사항</th>
+				<th>배송 날짜</th>
+				<th>특별 지시사항</th>
+				<th>주문자 이름</th>
+				<th>전화번호</th>
+				<th>주소</th>
+				<th>수정/삭제</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="order : ${Orders}">
+				<td th:text="${order.serial_no}">주문번호</td>
+				<td th:text="${order.product_code.productName}">상품명</td>
+				<td th:text="${order.deliveryDate}">배송 날짜</td>
+				<td th:text="${order.member.realName}">주문자 이름</td>
+				<td th:text="${order.member.phoneNumber}">전화번호</td>
+				<td th:text="${order.member.address}">주소</td>
+				<td>
+					<button type="button" class="button"
+						th:onclick="'location.href=\'/orders/edit/' + ${order.serial_no} + '\''">수정</button>
+					<form th:action="@{/orders/delete/{id}(id=${order.serial_no})}" method="post">
+						<input type="hidden" name="_method" value="delete" />
+						<button type="submit" class="button delete"
+							onclick="return confirm('정말 이 주문을 삭제하시겠습니까?');">삭제</button>
+					</form>
+
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<button class="button" onclick="location.href='/orders/new'">새 주문 추가</button> <!-- 커스텀 주문 폼으로 이동 -->
+	<button onclick="location.href='/'">홈으로</button>
+	<th:block th:replace="~{footer :: footer}"></th:block>
+</body>
+
+</html>
