@@ -1,98 +1,66 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
-    <title>Add Custom Order</title>
+    <title>Custom Order Form</title>
     <style>
+        /* Your existing CSS */
         body {
             display: flex;
-            justify-content: flex-start;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
             height: 100vh;
             margin: 0;
-            flex-direction: column;
-            padding-top: 50px;
-            background-color: #f0fff0;
+            background: linear-gradient(135deg, #f0fff0, #c9fdd7);
+            font-family: Arial, sans-serif;
         }
 
         h1 {
-            color: #3cb371;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            border: 1px solid #3cb371;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            background-color: #ffffff;
+            font-size: 2.5em;
+            color: #32cd32;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
         }
 
         .form-group {
-            display: flex;
-            align-items: center;
-            margin: 10px 0;
-            width: 100%;
+            margin-bottom: 15px;
         }
 
         label {
-            width: 150px;
-            margin-right: 10px;
-            color: #3cb371;
+            display: block;
+            margin-bottom: 5px;
+            color: #32cd32;
         }
 
-        input,
-        select {
+        input, select {
             width: 100%;
-            max-width: 300px;
-            padding: 10px;
-            border: 1px solid #3cb371;
-            border-radius: 5px;
+            padding: 8px;
+            box-sizing: border-box;
         }
 
         .error {
             color: red;
-            font-size: 0.8em;
+            margin-top: 5px;
         }
 
         button {
-            width: auto;
-            align-self: center;
-            padding: 10px 20px;
-            background-color: #3cb371;
+            padding: 10px 15px;
+            background-color: #32cd32;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s;
         }
 
         button:hover {
             background-color: #2e8b57;
         }
-
-        .home-button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #3cb371;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .home-button:hover {
-            background-color: #2e8b57;
-        }
     </style>
 </head>
-
 <body>
-    <th:block th:replace="header :: header"></th:block>
-    <h1>새 맞춤 주문 추가하기</h1>
+    <th:block th:replace="~{header :: header}"></th:block>
+    <h1>Custom Order Form</h1>
+
     <form th:action="@{/custom-orders}" th:object="${customOrder}" method="post">
         <div class="form-group">
             <label for="productCode">상품코드:</label>
@@ -120,10 +88,24 @@
             <div class="error" th:if="${#fields.hasErrors('specialInstructions')}" th:errors="*{specialInstructions}"></div>
         </div>
 
+        <div class="form-group">
+            <label for="orderName">주문자 이름:</label>
+            <input type="text" id="orderName" th:field="*{member.realName}" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="orderPhoneNumber">전화번호:</label>
+            <input type="text" id="orderPhoneNumber" th:field="*{member.phoneNumber}" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="orderAddress">주소:</label>
+            <input type="text" id="orderAddress" th:field="*{member.address}" readonly>
+        </div>
+
         <button type="submit">Save Order</button>
     </form>
-    <button class="home-button" onclick="location.href='/'">홈으로</button>
-    <th:block th:replace="footer :: footer"></th:block>
-</body>
 
+    <th:block th:replace="~{footer :: footer}"></th:block>
+</body>
 </html>
