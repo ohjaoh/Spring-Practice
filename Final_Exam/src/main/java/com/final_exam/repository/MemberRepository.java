@@ -8,4 +8,8 @@ import org.springframework.stereotype.Repository;
 public interface MemberRepository extends JpaRepository<Member, Integer> {
     // 이메일로 회원을 찾는 메소드
     Member findByEmail(String email);
+    // 로그인 시 사용하는 메서드
+    Member findByUsernameAndPassword(String id, String password);
+    // mypage방문 시 본인의 정보를 확인하는 메서드
+    Member findByUsername(String username);
 }

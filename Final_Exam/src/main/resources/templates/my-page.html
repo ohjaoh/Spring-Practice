@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Page</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #f0fff0, #c9fdd7);
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #32cd32;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .info-box {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+        }
+
+        .info {
+            margin: 10px 0;
+            font-size: 1.2em;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <th:block th:replace="header :: header"></th:block>
+    <h1>My Page</h1>
+    <div class="info-box">
+        <div class="info">Username: <span th:text="${member.username}"></span></div>
+        <div class="info">Email: <span th:text="${member.email}"></span></div>
+        <div class="info">Address: <span th:text="${member.address}"></span></div>
+        <div class="info">Phone Number: <span th:text="${member.phoneNumber}"></span></div>
+        <div class="info">Birthdate: <span th:text="${member.birthdate}"></span></div>
+        <div class="info">Points: <span th:text="${member.points}"></span></div>
+        <div class="info">Total Payment: <span th:text="${member.totalPaymentAmount}"></span></div>
+    </div>
+    <th:block th:replace="footer :: footer"></th:block>
+</body>
+</html>

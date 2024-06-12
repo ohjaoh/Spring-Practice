@@ -50,4 +50,19 @@ public class MemberService {
     public void deleteMember(int id) {
         memberRepository.deleteById(id);
     }
+    
+    public Member authenticate(String username, String password) {
+        // 실제 인증 로직 구현
+        return memberRepository.findByUsernameAndPassword(username, password);
+    }
+    
+    public Member findByUsername(String username) {
+        return memberRepository.findByUsername(username);
+    }
+    
+
+    public boolean isUsernameTaken(String username) {
+        return memberRepository.findByUsername(username) != null;
+    }
+    
 }

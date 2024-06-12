@@ -1,39 +1,38 @@
 package com.final_exam.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.final_exam.entity.Member;
+import com.final_exam.service.MemberService;
+
 import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class LoginController {
 
+    @Autowired
+    private MemberService memberService;
+
     @GetMapping("/login")
-    public String loginForm() {
+    public String loginForm(Model model) {
         return "login";
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam String username, @RequestParam String password, HttpSession session) {
-        // 인증 로직 (이 예제에서는 단순히 사용자를 세션에 저장)
-        // 실제로는 사용자 인증을 추가해야 함
-        User user = authenticate(username, password);
-        if (user != null) {
-            session.setAttribute("user", user);
+    public String login(@RequestParam String username, @RequestParam String password, HttpSession session, Model model) {
+        Member member = memberService.authenticate(username, password);
+        if (member != null) {
+            session.setAttribute("user", new User(member.getUsername()));
             return "redirect:/";
         } else {
-            return "redirect:/login?error";
+            model.addAttribute("error", "잘못된 정보를 입력하셨습니다.");
+            return "login";
         }
-    }
-
-    private User authenticate(String username, String password) {
-        // 실제 인증 로직 구현
-        // 예제에서는 단순히 사용자 객체를 반환
-        if ("admin".equals(username) && "password".equals(password)) {
-            return new User(username);
-        }
-        return null;
     }
 
     static class User {
