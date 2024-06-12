@@ -16,21 +16,17 @@ import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-//회원에서 주소, 전화번호, 주문자 아이디 받아오고 
-//주문페이지에서 결제금액, 결제방법, 결제 지불 방법 생성
-// 배송요구사항 추가
 @Entity
 @Table(name = "orders")
 @Data
 public class Order {
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int serial_no;
 
-    @ManyToOne
-    @JoinColumn(name = "product_code", referencedColumnName = "productCode")
+    @Column(name = "product_code")
     @NotNull(message = "Product code is required")
-    private Product product_code;
+    private String productCode;
 
     @ManyToOne
     @JoinColumn(name = "member_id", referencedColumnName = "user_no")
@@ -61,12 +57,12 @@ public class Order {
         this.serial_no = serial_no;
     }
 
-    public Product getProduct_code() {
-        return product_code;
+    public String getProductCode() {
+        return productCode;
     }
 
-    public void setProduct_code(Product product_code) {
-        this.product_code = product_code;
+    public void setProductCode(String productCode) {
+        this.productCode = productCode;
     }
 
     public Member getMember() {
@@ -87,6 +83,7 @@ public class Order {
     public void setDeliveryDate(Date deliveryDate) {
         this.deliveryDate = deliveryDate;
     }
+
     public String getOrderName() {
         return orderName;
     }

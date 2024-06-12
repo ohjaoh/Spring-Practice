@@ -15,7 +15,6 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-
 @Entity
 @Table(name = "custom_orders")
 @Data
@@ -24,10 +23,9 @@ public class CustomOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int serial_no;
 
-    @ManyToOne
-    @JoinColumn(name = "product_code", referencedColumnName = "productCode")
+    @Column(name = "product_code")
     @NotNull(message = "Product code is required")
-    private Product product_code;
+    private String productCode;
 
     @ManyToOne
     @JoinColumn(name = "member_id", referencedColumnName = "user_no")
@@ -64,12 +62,12 @@ public class CustomOrder {
         this.serial_no = serial_no;
     }
 
-    public Product getProduct_code() {
-        return product_code;
+    public String getProductCode() {
+        return productCode;
     }
 
-    public void setProduct_code(Product product_code) {
-        this.product_code = product_code;
+    public void setProductCode(String productCode) {
+        this.productCode = productCode;
     }
 
     public Member getMember() {

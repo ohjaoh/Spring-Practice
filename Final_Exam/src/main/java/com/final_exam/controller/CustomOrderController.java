@@ -85,7 +85,7 @@ public class CustomOrderController {
 
         // 디버깅: 주문 정보 출력
         System.out.println("CustomOrder details:");
-        System.out.println("Product Code: " + customOrder.getProduct_code().getProductCode());
+        System.out.println("Product Code: " + customOrder.getProductCode());
         System.out.println("Customization Details: " + customOrder.getCustomizationDetails());
         System.out.println("Delivery Date: " + customOrder.getDeliveryDate());
         System.out.println("Special Instructions: " + customOrder.getSpecialInstructions());
@@ -94,7 +94,7 @@ public class CustomOrderController {
         System.out.println("Order Address: " + customOrder.getOrderAddress());
 
         customOrderService.saveCustomOrder(customOrder);
-        System.out.println("Custom order saved with product code: " + customOrder.getProduct_code().getProductCode());
+        System.out.println("Custom order saved with product code: " + customOrder.getProductCode());
         session.setAttribute("customOrderSaved", true);
         session.removeAttribute("visitedCustomOrderForm");
         return "redirect:/custom-orders";

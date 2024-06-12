@@ -28,7 +28,7 @@ public class CustomOrderService {
     public void updateCustomOrder(int id, CustomOrder customOrder) {
         CustomOrder existingOrder = customOrderRepository.findById(id).orElse(null);
         if (existingOrder != null) {
-            existingOrder.setProduct_code(customOrder.getProduct_code());
+            existingOrder.setProductCode(customOrder.getProductCode());
             existingOrder.setCustomizationDetails(customOrder.getCustomizationDetails());
             existingOrder.setDeliveryDate(customOrder.getDeliveryDate());
             existingOrder.setSpecialInstructions(customOrder.getSpecialInstructions());

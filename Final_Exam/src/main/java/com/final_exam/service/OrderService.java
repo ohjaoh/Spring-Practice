@@ -29,7 +29,7 @@ public class OrderService {
     public void updateOrder(int id, Order Order) {
     	Order existingOrder = orderRepository.findById(id).orElse(null);
         if (existingOrder != null) {
-            existingOrder.setProduct_code(Order.getProduct_code());
+            existingOrder.setProductCode(Order.getProductCode());
             existingOrder.setDeliveryDate(Order.getDeliveryDate());
             orderRepository.save(existingOrder);
         }

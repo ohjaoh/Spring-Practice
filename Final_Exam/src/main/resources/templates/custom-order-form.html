@@ -64,10 +64,10 @@
     <form th:action="@{/custom-orders}" th:object="${customOrder}" method="post">
         <div class="form-group">
             <label for="productCode">상품코드:</label>
-            <select id="productCode" th:field="*{product_code.productCode}">
+            <select id="productCode" th:field="*{productCode}">
                 <option th:each="product : ${products}" th:value="${product.productCode}" th:text="${product.productName}">상품명</option>
             </select>
-            <div class="error" th:if="${#fields.hasErrors('product_code')}" th:errors="*{product_code}"></div>
+            <div class="error" th:if="${#fields.hasErrors('productCode')}" th:errors="*{productCode}"></div>
         </div>
 
         <div class="form-group">

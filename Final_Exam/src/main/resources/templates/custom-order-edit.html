@@ -97,7 +97,7 @@
 
 <body>
     <h1>Custom Order Edit</h1>
-    <form th:action="@{/custom-orders/{id}(id=${customOrder.id})}" th:object="${customOrder}" method="post">
+    <form th:action="@{/custom-orders/{id}(id=${customOrder.serial_no})}" th:object="${customOrder}" method="post">
         <div class="form-group">
             <label for="productCode">Product Code:</label>
             <input type="text" id="productCode" th:field="*{productCode}">

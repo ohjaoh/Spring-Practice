@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Edit  Order</title>
+    <title>Edit Order</title>
     <style>
         body {
             display: flex;
@@ -96,8 +96,8 @@
 </head>
 
 <body>
-    <h1> Order Edit</h1>
-    <form th:action="@{/orders/{id}(id=${Order.id})}" th:object="${Order}" method="post">
+    <h1>Edit Order</h1>
+    <form th:action="@{/orders/{id}(id=${Order.serial_no})}" th:object="${Order}" method="post">
         <div class="form-group">
             <label for="productCode">Product Code:</label>
             <input type="text" id="productCode" th:field="*{productCode}">
@@ -110,7 +110,7 @@
         </div>
         <div th:if="${#fields.hasErrors('deliveryDate')}" th:errors="*{deliveryDate}"> <!-- 유효성 검사 오류 메시지 표시 --></div>
 
-        <button type="submit" class="button">Save  Order</button>
+        <button type="submit" class="button">Save Order</button>
     </form>
     <button onclick="location.href='/'" class="button home-button">Home</button>
 </body>

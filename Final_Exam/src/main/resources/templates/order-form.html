@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title> Order Form</title>
+    <title>Order Form</title>
     <style>
         /* Your existing CSS */
         body {
@@ -61,13 +61,13 @@
     <th:block th:replace="~{header :: header}"></th:block>
     <h1>주문 폼</h1>
 
-    <form th:action="@{/orders}" th:object="${Order}" method="post">
+    <form th:action="@{/ordersAdd}" th:object="${order}" method="post">
         <div class="form-group">
             <label for="productCode">상품코드:</label>
-            <select id="productCode" th:field="*{product_code.productCode}">
+            <select id="productCode" th:field="*{productCode}">
                 <option th:each="product : ${products}" th:value="${product.productCode}" th:text="${product.productName}">상품명</option>
             </select>
-            <div class="error" th:if="${#fields.hasErrors('product_code')}" th:errors="*{product_code}"></div>
+            <div class="error" th:if="${#fields.hasErrors('productCode')}" th:errors="*{productCode}"></div>
         </div>
 
         <div class="form-group">
@@ -78,17 +78,17 @@
 
         <div class="form-group">
             <label for="orderName">주문자 이름:</label>
-            <input type="text" id="orderName" th:field="*{member.realName}" readonly>
+            <input type="text" id="orderName" th:field="*{orderName}" readonly>
         </div>
 
         <div class="form-group">
             <label for="orderPhoneNumber">전화번호:</label>
-            <input type="text" id="orderPhoneNumber" th:field="*{member.phoneNumber}" readonly>
+            <input type="text" id="orderPhoneNumber" th:field="*{orderPhoneNumber}" readonly>
         </div>
 
         <div class="form-group">
             <label for="orderAddress">주소:</label>
-            <input type="text" id="orderAddress" th:field="*{member.address}" readonly>
+            <input type="text" id="orderAddress" th:field="*{orderAddress}" readonly>
         </div>
 
         <button type="submit">Save Order</button>

@@ -1,4 +1,3 @@
-// OrderController.java
 package com.final_exam.controller;
 
 import java.util.List;
@@ -27,7 +26,7 @@ import jakarta.validation.Valid;
 public class OrderController {
 
     @Autowired
-    private OrderService OrderService;
+    private OrderService orderService;
 
     @Autowired
     private ProductService productService;
@@ -47,11 +46,11 @@ public class OrderController {
         LoginController.User user = (LoginController.User) session.getAttribute("user");
         if (user != null) {
             Member member = memberService.findById(user.getId());
-            Order Order = new Order();
-            Order.setMember(member); // 회원 정보를 맞춤 주문에 설정
+            Order order = new Order();
+            order.setMember(member); // 회원 정보를 맞춤 주문에 설정
 
             List<Product> products = productService.getAllProducts();
-            model.addAttribute("Order", Order);
+            model.addAttribute("order", order);
             model.addAttribute("products", products);
             session.setAttribute("visitedOrderForm", true);
             return "order-form";
@@ -60,9 +59,9 @@ public class OrderController {
     }
 
     // 새로운 주문 추가 처리
-    @PostMapping("/orders")
-    public String addOrder(@Valid @ModelAttribute("Order") Order Order, BindingResult result,
-                                 Model model, HttpSession session) {
+    @PostMapping("/ordersAdd")
+    public String addOrder(@Valid @ModelAttribute("order") Order order, BindingResult result,
+                           Model model, HttpSession session) {
         if (result.hasErrors()) {
             List<Product> products = productService.getAllProducts();
             model.addAttribute("products", products);
@@ -74,7 +73,7 @@ public class OrderController {
         if (user != null) {
             Member member = memberService.findById(user.getId());
             if (member != null) {
-                Order.setMember(member);
+                order.setMember(member);
                 System.out.println("Member set with ID: " + member.getId() + ", RealName: " + member.getRealName()); // 디버깅 로그 출력
             } else {
                 System.out.println("Member not found for ID: " + user.getId());
@@ -85,14 +84,14 @@ public class OrderController {
 
         // 디버깅: 주문 정보 출력
         System.out.println("Order details:");
-        System.out.println("Product Code: " + Order.getProduct_code().getProductCode());
-        System.out.println("Delivery Date: " + Order.getDeliveryDate());
-        System.out.println("Order Name: " + Order.getOrderName());
-        System.out.println("Order Phone Number: " + Order.getOrderPhoneNumber());
-        System.out.println("Order Address: " + Order.getOrderAddress());
+        System.out.println("Product Code: " + order.getProductCode());
+        System.out.println("Delivery Date: " + order.getDeliveryDate());
+        System.out.println("Order Name: " + order.getOrderName());
+        System.out.println("Order Phone Number: " + order.getOrderPhoneNumber());
+        System.out.println("Order Address: " + order.getOrderAddress());
 
-        OrderService.saveOrder(Order);
-        System.out.println("order saved with product code: " + Order.getProduct_code().getProductCode());
+        orderService.saveOrder(order);
+        System.out.println("Order saved with product code: " + order.getProductCode());
         session.setAttribute("OrderSaved", true);
         session.removeAttribute("visitedOrderForm");
         return "redirect:/orders";
@@ -101,17 +100,17 @@ public class OrderController {
     // 맞춤 주문 목록 페이지로 이동
     @GetMapping("/orders")
     public String viewOrderList(Model model) {
-        List<Order> Orders = OrderService.getAllOrders();
-        model.addAttribute("Orders", Orders);
+        List<Order> orders = orderService.getAllOrders();
+        model.addAttribute("orders", orders);
         return "order-list";
     }
 
     // 맞춤 주문 수정 페이지로 이동
-    @GetMapping("/orders/edit/{id}")
-    public String showEditOrderForm(@PathVariable("id") int id, Model model, HttpSession session) {
-        Order Order = OrderService.getOrderById(id);
+    @GetMapping("/orders/edit/{serial_no}")
+    public String showEditOrderForm(@PathVariable("serial_no") int id, Model model, HttpSession session) {
+        Order order = orderService.getOrderById(id);
         List<Product> products = productService.getAllProducts();
-        model.addAttribute("Order", Order);
+        model.addAttribute("order", order);
         model.addAttribute("products", products);
         session.setAttribute("visitedEditOrderForm", true);
         return "order-edit";
@@ -120,7 +119,7 @@ public class OrderController {
     // 맞춤 주문 수정 처리
     @PostMapping("/orders/edit/{id}")
     public String editOrder(@PathVariable("id") int id,
-                                  @Valid @ModelAttribute("Order") Order Order, BindingResult result, Model model,
+                                  @Valid @ModelAttribute("order") Order order, BindingResult result, Model model,
                                   HttpSession session) {
         if (result.hasErrors()) {
             List<Product> products = productService.getAllProducts();
@@ -132,10 +131,10 @@ public class OrderController {
         LoginController.User user = (LoginController.User) session.getAttribute("user");
         if (user != null) {
             Member member = memberService.findById(user.getId());
-            Order.setMember(member);
+            order.setMember(member);
         }
 
-        OrderService.updateOrder(id, Order);
+        orderService.updateOrder(id, order);
         session.setAttribute("OrderUpdated", true);
         session.removeAttribute("visitedEditOrderForm");
         return "redirect:/orders";
@@ -144,7 +143,7 @@ public class OrderController {
     // 맞춤 주문 삭제 처리
     @DeleteMapping("/orders/delete/{id}")
     public String deleteOrder(@PathVariable("id") int id, HttpSession session) {
-        OrderService.deleteOrder(id);
+        orderService.deleteOrder(id);
         session.setAttribute("OrderDeleted", true);
         return "redirect:/orders";
     }
