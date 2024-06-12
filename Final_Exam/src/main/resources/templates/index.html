@@ -53,8 +53,14 @@
     <a href="/custom-orders-management" class="button">Custom Orders</a>
     <a href="/member-management" class="button">Member Management</a>
     <a href="/member-form" class="button">Sign Up</a>
-    <button class="button" onclick="location.href='/login'">Login</button>
-    <a href="/my-page" class="button" th:if="${session.user != null}">My Page</a>
+
+    <th:block th:if="${session.user == null}">
+        <button class="button" onclick="location.href='/login'">Login</button>
+    </th:block>
+    <th:block th:if="${session.user != null}">
+        <a href="/my-page" class="button">My Page</a>
+    </th:block>
+
     <th:block th:replace="footer :: footer"></th:block>
 </body>
 

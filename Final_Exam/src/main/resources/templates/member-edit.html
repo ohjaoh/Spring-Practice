@@ -70,10 +70,13 @@
     <th:block th:replace="header :: header"></th:block>
     <h1>Edit Member</h1>
     <form th:action="@{/members/save}" th:object="${member}" method="post">
-        <input type="hidden" th:field="*{id}" />
+        <input type="hidden" th:field="*{user_no}" />
 
-        <label for="username">Username:</label>
-        <input type="text" id="username" th:field="*{username}" required />
+        <label for="id">아이디:</label>
+        <input type="text" id="id" th:field="*{id}" required />
+
+        <label for="realName">실명:</label>
+        <input type="text" id="realName" th:field="*{realName}" required />
 
         <label for="email">Email:</label>
         <input type="email" id="email" th:field="*{email}" required />
@@ -92,7 +95,7 @@
 
         <button type="submit" class="button">Save</button>
     </form>
-    <button onclick="location.href='/members'">Cancel</button>
+    <button onclick="location.href='/members'" class="button">Cancel</button>
     <th:block th:replace="footer :: footer"></th:block>
 </body>
 

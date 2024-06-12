@@ -24,10 +24,10 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam String username, @RequestParam String password, HttpSession session, Model model) {
-        Member member = memberService.authenticate(username, password);
+    public String login(@RequestParam String id, @RequestParam String password, HttpSession session, Model model) {
+        Member member = memberService.authenticate(id, password);
         if (member != null) {
-            session.setAttribute("user", new User(member.getUsername()));
+            session.setAttribute("user", new User(member.getId()));
             return "redirect:/";
         } else {
             model.addAttribute("error", "잘못된 정보를 입력하셨습니다.");
@@ -36,14 +36,14 @@ public class LoginController {
     }
 
     static class User {
-        private String name;
+        private String id;
 
-        public User(String name) {
-            this.name = name;
+        public User(String id) {
+            this.id = id;
         }
 
-        public String getName() {
-            return name;
+        public String getId() {
+            return id;
         }
     }
 }

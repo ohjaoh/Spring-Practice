@@ -41,7 +41,8 @@
     <th:block th:replace="header :: header"></th:block>
     <h1>My Page</h1>
     <div class="info-box">
-        <div class="info">Username: <span th:text="${member.username}"></span></div>
+        <div class="info">ID: <span th:text="${member.id}"></span></div>
+        <div class="info">Real Name: <span th:text="${member.realName}"></span></div>
         <div class="info">Email: <span th:text="${member.email}"></span></div>
         <div class="info">Address: <span th:text="${member.address}"></span></div>
         <div class="info">Phone Number: <span th:text="${member.phoneNumber}"></span></div>

@@ -20,7 +20,7 @@ public class MyPageController {
     public String myPage(HttpSession session, Model model) {
         LoginController.User user = (LoginController.User) session.getAttribute("user");
         if (user != null) {
-            Member member = memberService.findByUsername(user.getName());
+            Member member = memberService.findById(user.getId());
             model.addAttribute("member", member);
             return "my-page";
         }

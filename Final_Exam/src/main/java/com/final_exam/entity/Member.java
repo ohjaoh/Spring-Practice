@@ -19,115 +19,116 @@ import java.time.LocalDate;
 @Table(name = "members")
 @Data
 public class Member {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // 회원 아이디 (기본 키)
-    private int id;
+    public int getUser_no() {
+		return user_no;
+	}
 
-    @NotBlank(message = "Username is mandatory")
-    // 사용자 이름 (공백이 아닌 값을 입력해야 함)
-    private String username;
+	public void setUser_no(int user_no) {
+		this.user_no = user_no;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getRealName() {
+		return realName;
+	}
+
+	public void setRealName(String realName) {
+		this.realName = realName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public LocalDate getBirthdate() {
+		return birthdate;
+	}
+
+	public void setBirthdate(LocalDate birthdate) {
+		this.birthdate = birthdate;
+	}
+
+	public int getPoints() {
+		return points;
+	}
+
+	public void setPoints(int points) {
+		this.points = points;
+	}
+
+	public BigDecimal getTotalPaymentAmount() {
+		return totalPaymentAmount;
+	}
+
+	public void setTotalPaymentAmount(BigDecimal totalPaymentAmount) {
+		this.totalPaymentAmount = totalPaymentAmount;
+	}
+
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int user_no; // 회원 아이디 (기본 키)
+
+    @NotBlank(message="아이디가 비었습니다.")
+    private String id; // 로그인 아이디
+
+    @NotBlank(message = "실명이 비었습니다.")
+    private String realName; // 실명 필드 추가
 
     @NotBlank(message = "Password is mandatory")
-    // 비밀번호 (공백이 아닌 값을 입력해야 함)
-    private String password;
+    private String password; // 비밀번호
 
     @NotBlank(message = "Address is mandatory")
-    // 주소 (공백이 아닌 값을 입력해야 함)
-    private String address;
+    private String address; // 주소
 
     @NotBlank(message = "Phone number is mandatory")
-    // 전화번호 (공백이 아닌 값을 입력해야 함)
-    private String phoneNumber;
+    private String phoneNumber; // 전화번호
 
     @NotBlank(message = "Email is mandatory")
     @Email(message = "Email should be valid")
-    // 이메일 (유효한 이메일 형식이어야 함)
-    private String email;
+    private String email; // 이메일
 
     @NotNull(message = "Birthdate is mandatory")
     @Past(message = "Birthdate must be in the past")
-    // 생일 (과거 날짜여야 함)
-    private LocalDate birthdate;
+    private LocalDate birthdate; // 생일
 
     @Min(value = 0, message = "Points must be greater than or equal to 0")
-    // 포인트 (0 이상이어야 함)
-    private int points;
+    private int points; // 포인트
 
     @Min(value = 0, message = "Total payment amount must be greater than or equal to 0")
-    // 누적 결제 금액 (0 이상이어야 함)
-    private BigDecimal totalPaymentAmount;
-
-    // @Data가 정상적으로 동작하지 않아, 직접 작성한 getter와 setter 메서드들
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public LocalDate getBirthdate() {
-        return birthdate;
-    }
-
-    public void setBirthdate(LocalDate birthdate) {
-        this.birthdate = birthdate;
-    }
-
-    public int getPoints() {
-        return points;
-    }
-
-    public void setPoints(int points) {
-        this.points = points;
-    }
-
-    public BigDecimal getTotalPaymentAmount() {
-        return totalPaymentAmount;
-    }
-
-    public void setTotalPaymentAmount(BigDecimal totalPaymentAmount) {
-        this.totalPaymentAmount = totalPaymentAmount;
-    }
+    private BigDecimal totalPaymentAmount; // 누적 결제 금액
 }

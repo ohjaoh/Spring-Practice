@@ -35,9 +35,9 @@ public class MemberService {
         return memberRepository.findAll();
     }
 
-    // ID로 회원 찾기 메서드
-    public Member getMemberById(int id) {
-        Optional<Member> optionalMember = memberRepository.findById(id);
+    // user_no로 회원 찾기 메서드
+    public Member getMemberByUserNo(int userNo) {
+        Optional<Member> optionalMember = memberRepository.findById(userNo);
         return optionalMember.orElse(null);
     }
 
@@ -47,22 +47,19 @@ public class MemberService {
     }
 
     // 회원 삭제 메서드
-    public void deleteMember(int id) {
-        memberRepository.deleteById(id);
+    public void deleteMember(int userNo) {
+        memberRepository.deleteById(userNo);
     }
     
-    public Member authenticate(String username, String password) {
-        // 실제 인증 로직 구현
-        return memberRepository.findByUsernameAndPassword(username, password);
+    public Member authenticate(String id, String password) {
+        return memberRepository.findByIdAndPassword(id, password);
     }
     
-    public Member findByUsername(String username) {
-        return memberRepository.findByUsername(username);
+    public Member findById(String id) {
+        return memberRepository.findById(id);
     }
-    
 
-    public boolean isUsernameTaken(String username) {
-        return memberRepository.findByUsername(username) != null;
+    public boolean isIdTaken(String id) {
+        return memberRepository.existsById(id);
     }
-    
 }

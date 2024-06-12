@@ -43,6 +43,12 @@
         .button:hover {
             background-color: rgba(102, 205, 170, 0.8); /* 호버 시 더 어두운 연두색 */
         }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
     </style>
 </head>
 
@@ -50,8 +56,11 @@
     <th:block th:replace="header :: header"></th:block>
     <h1>Member Management</h1>
     
-    <button class="button" onclick="location.href='/member-list'">View Members</button>
-    <button class="button" onclick="location.href='/member-form'">Add New Member</button>
+    <div class="button-container">
+        <a href="/member-list" class="button">View Members</a>
+        <a href="/member-form" class="button">Add New Member</a>
+    </div>
+
     <th:block th:replace="footer :: footer"></th:block>
 </body>
 
