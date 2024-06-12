@@ -1,3 +1,11 @@
+-- root에서 실행할 코드입니다.
+
+-- 데이터베이스 확인
+show databases;
+
+-- testDB가 없으면 실행하여 생성
+create database testDB;
+
 -- 사용자 'tester'를 'localhost'에서 비밀번호 '1234'와 함께 생성합니다.
 create user 'tester'@'localhost' identified by '1234';
 

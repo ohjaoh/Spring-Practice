@@ -48,22 +48,34 @@
 
 <body>
 	<th:block th:replace="header :: header"></th:block>
-	<h1>Welcome to Management System</h1>
-	<a href="/product-management" class="button">상품관리</a>
-	<a href="/custom-orders-management" class="button">맞춤주문관리</a>
-	<a href="/orders-management" class="button">주문관리</a>
-	<a href="/member-management" class="button">회원관리</a>
-
+	<h1>장인공방에 오신것을 환영합니다.</h1>
+	<p>석재 밑에 세션으로 로그인해야 볼 수 있게 해둔 관리들을 관리자가 로그인 했을 때 가능하게 하면 될듯</p>
+	<th:block th:if="${session.user != null}">
+		<a href="/product-management" class="button">상품관리</a>
+	</th:block>
+	<th:block th:if="${session.user != null}">
+		<a href="/custom-orders-management" class="button">맞춤주문관리</a>
+	</th:block>
+	<th:block th:if="${session.user != null}">
+		<a href="/orders-management" class="button">주문관리</a>
+	</th:block>
+	<th:block th:if="${session.user != null}">
+		<a href="/member-management" class="button">회원관리</a>
+	</th:block>
 	<th:block th:if="${session.user == null}">
-		<button class="button" onclick="location.href='/login'">Login</button>
+		<button class="button" onclick="location.href='/login'">회원로그인</button>
+	</th:block>
+	
+	<!--여기서 관리자로그인-->
+	
+	<th:block th:if="${session.user == null}">
+		<button class="button" onclick="">관리자로그인</button>
 	</th:block>
 	<th:block th:if="${session.user != null}">
 		<a href="/my-page" class="button">My Page</a>
 	</th:block>
-	
-	<th:block th:if="${session.user != null}">
-		<a href="/my-page" class="button">추후 수정일단 마이페이지</a>
-	</th:block>
+
+
 
 	<th:block th:replace="footer :: footer"></th:block>
 </body>
