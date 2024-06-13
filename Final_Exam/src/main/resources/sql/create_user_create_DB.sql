@@ -9,7 +9,7 @@ create database testDB;
 -- 사용자 'tester'를 'localhost'에서 비밀번호 '1234'와 함께 생성합니다.
 create user 'tester'@'localhost' identified by '1234';
 
--- 'tester' 사용자에게 'testDB' 데이터베이스에 대한 모든 권한을 부여합니다.
+-- 'tester' 사용자에게 'create_db_test' 데이터베이스에 대한 모든 권한을 부여합니다.
 grant all privileges on testDB.* to 'tester'@'localhost';
 
 -- 'tester' 사용자에게 모든 데이터베이스에 대해 테이블을 생성할 수 있는 권한을 부여합니다.

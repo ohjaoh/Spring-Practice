@@ -34,20 +34,20 @@ public class OrderController {
     @Autowired
     private MemberService memberService;
 
-    // 맞춤 주문 관리 페이지를 반환합니다.
+    //  주문 관리 페이지를 반환합니다.
     @GetMapping("/orders-management")
     public String viewOrderManagementPage() {
         return "order-management";
     }
 
-    // 새로운 맞춤 주문 추가 페이지로 이동
+    // 새로운  주문 추가 페이지로 이동
     @GetMapping("/orders/new")
     public String showAddOrderForm(Model model, HttpSession session) {
         LoginController.User user = (LoginController.User) session.getAttribute("user");
         if (user != null) {
             Member member = memberService.findById(user.getId());
             Order order = new Order();
-            order.setMember(member); // 회원 정보를 맞춤 주문에 설정
+            order.setMember(member); // 회원 정보를  주문에 설정
 
             List<Product> products = productService.getAllProducts();
             model.addAttribute("order", order);
@@ -58,28 +58,40 @@ public class OrderController {
         return "redirect:/login";
     }
 
-    // 새로운 주문 추가 처리
     @PostMapping("/ordersAdd")
-    public String addOrder(@Valid @ModelAttribute("order") Order order, BindingResult result,
+    public String addOrder(@ModelAttribute("order") Order order, BindingResult result,
                            Model model, HttpSession session) {
-        if (result.hasErrors()) {
-            List<Product> products = productService.getAllProducts();
-            model.addAttribute("products", products);
-            return "order-form";
-        }
+        // 초기 디버깅 로그
+        System.out.println("addOrder 메소드가 호출되었습니다.");
 
         // 회원 정보 설정
         LoginController.User user = (LoginController.User) session.getAttribute("user");
-        if (user != null) {
-            Member member = memberService.findById(user.getId());
-            if (member != null) {
-                order.setMember(member);
-                System.out.println("Member set with ID: " + member.getId() + ", RealName: " + member.getRealName()); // 디버깅 로그 출력
-            } else {
-                System.out.println("Member not found for ID: " + user.getId());
-            }
-        } else {
+        if (user == null) {
             System.out.println("User not found in session");
+            model.addAttribute("error", "로그인이 필요합니다.");
+            return "redirect:/login";
+        } else {
+            System.out.println("User found in session with ID: " + user.getId());
+            Member member = memberService.findById(user.getId());
+            if (member == null) {
+                System.out.println("Member not found for ID: " + user.getId());
+                model.addAttribute("error", "회원 정보를 찾을 수 없습니다.");
+                return "redirect:/login";
+            } else {
+                order.setMember(member);
+                System.out.println("Member set with ID: " + member.getId() + ", RealName: " + member.getRealName());
+            }
+        }
+
+        // 유효성 검사 수행
+        if (result.hasErrors()) {
+            // 유효성 검사 오류 메시지 출력
+            result.getAllErrors().forEach(error -> System.out.println("Validation error: " + error.getDefaultMessage()));
+            
+            // 유효성 검사 실패 시, 제품 목록을 다시 모델에 추가하고 폼으로 돌아감
+            List<Product> products = productService.getAllProducts();
+            model.addAttribute("products", products);
+            return "order-form";
         }
 
         // 디버깅: 주문 정보 출력
@@ -97,7 +109,7 @@ public class OrderController {
         return "redirect:/orders";
     }
 
-    // 맞춤 주문 목록 페이지로 이동
+    //  주문 목록 페이지로 이동
     @GetMapping("/orders")
     public String viewOrderList(Model model) {
         List<Order> orders = orderService.getAllOrders();
@@ -105,7 +117,7 @@ public class OrderController {
         return "order-list";
     }
 
-    // 맞춤 주문 수정 페이지로 이동
+    //  주문 수정 페이지로 이동
     @GetMapping("/orders/edit/{serial_no}")
     public String showEditOrderForm(@PathVariable("serial_no") int id, Model model, HttpSession session) {
         Order order = orderService.getOrderById(id);
@@ -116,7 +128,7 @@ public class OrderController {
         return "order-edit";
     }
 
-    // 맞춤 주문 수정 처리
+    //  주문 수정 처리
     @PostMapping("/orders/edit/{id}")
     public String editOrder(@PathVariable("id") int id,
                                   @Valid @ModelAttribute("order") Order order, BindingResult result, Model model,
@@ -140,7 +152,7 @@ public class OrderController {
         return "redirect:/orders";
     }
 
-    // 맞춤 주문 삭제 처리
+    //  주문 삭제 처리
     @DeleteMapping("/orders/delete/{id}")
     public String deleteOrder(@PathVariable("id") int id, HttpSession session) {
         orderService.deleteOrder(id);
