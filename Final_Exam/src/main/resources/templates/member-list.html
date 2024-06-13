@@ -134,12 +134,10 @@
                 <td th:text="${member.email}">Email</td>
                 <td th:text="${member.phoneNumber}">Phone Number</td>
                 <td>
-                    <button type="button" class="button"
-                        th:onclick="'location.href=\'/members/edit/' + ${member.user_no} + '\''">Edit</button>
-                    <form th:action="@{/members/delete/{id}(id=${member.user_no})}" method="post">
+                    <button type="button" th:onclick="|location.href='@{/member-edit/{userNo}(userNo=${member.user_no})}'|">Edit</button>
+                    <form th:action="@{/members/{userNo}(userNo=${member.user_no})}" method="post" style="display:inline;">
                         <input type="hidden" name="_method" value="delete" />
-                        <button type="submit" class="button delete"
-                            onclick="return confirm('Are you sure you want to delete this member?');">Delete</button>
+                        <button type="submit" class="button delete" onclick="return confirm('Are you sure you want to delete this member?');">Delete</button>
                     </form>
                 </td>
             </tr>

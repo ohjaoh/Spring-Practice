@@ -54,10 +54,7 @@
 		<a href="/product-management" class="button">상품관리</a>
 	</th:block>
 	<th:block th:if="${session.user != null}">
-		<a href="/custom-orders-management" class="button">맞춤주문관리</a>
-	</th:block>
-	<th:block th:if="${session.user != null}">
-		<a href="/orders-management" class="button">주문관리</a>
+		<a href="/custom-orders-management" class="button">주문관리</a>
 	</th:block>
 	<th:block th:if="${session.user != null}">
 		<a href="/member-management" class="button">회원관리</a>
@@ -73,16 +70,11 @@
 	</th:block>
 
 	<th:block th:if="${session.user != null}">
-		<a href="location.href='/orders/new'" class="button">새 주문 추가</a>
-	</th:block>
-	<th:block th:if="${session.user != null}">
-		<a href="location.href='/custom-orders/new'" class="button">새 커스텀 주문 추가</a>
-	</th:block>
-	<th:block th:if="${session.user != null}">
 		<a href="/my-page" class="button">My Page</a>
 	</th:block>
-
-
+	<th:block th:if="${session.user != null}">
+		<a href="/user-products" class="button" >유저 상품 목록</a>
+	</th:block>
 
 	<th:block th:replace="footer :: footer"></th:block>
 </body>

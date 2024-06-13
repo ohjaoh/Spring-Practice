@@ -130,4 +130,28 @@ public class ProductController {
 		session.setAttribute("productDeleted", true);
 		response.sendRedirect("/product-list");
 	}
+	
+	@GetMapping("/user-products")
+    public String viewUserProductList(Model model, HttpSession session) {
+        if (session.getAttribute("user") == null) {
+            return "redirect:/login";
+        }
+
+        List<Product> products = productService.getAllProducts();
+        model.addAttribute("products", products);
+        return "user-product-list";
+    }
+
+    @GetMapping("/user-products/{code}")
+    public String viewUserProductDetail(@PathVariable("code") int code, Model model, HttpSession session) {
+        if (session.getAttribute("user") == null) {
+            return "redirect:/login";
+        }
+
+        Product product = productService.findByProductCode(code);
+        model.addAttribute("product", product);
+        return "user-product-detail";
+    }
+	
+	
 }

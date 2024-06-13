@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Product Detail</title>
+	<style>
+		body {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			height: 100vh;
+			margin: 0;
+			background: linear-gradient(135deg, #f0fff0, #c9fdd7);
+			/* 밝은 연두색 그라데이션 배경 */
+			font-family: Arial, sans-serif;
+		}
+
+		h1 {
+			font-size: 2.5em;
+			color: #32cd32;
+			/* 연두색 제목 */
+			text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+			margin-bottom: 20px;
+		}
+
+		.product-detail {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			border: 1px solid #32cd32;
+			padding: 30px;
+			border-radius: 10px;
+			background: rgba(255, 255, 255, 0.8);
+			/* 약간의 투명도 */
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+			backdrop-filter: blur(10px);
+			/* 글래스모피즘 효과 */
+			margin-bottom: 20px;
+			max-width: 500px;
+			/* 카드뷰 최대 너비 설정 */
+			width: 100%;
+		}
+
+		.product-detail p {
+			margin: 10px 0;
+			color: #32cd32;
+			/* 연두색 텍스트 */
+		}
+
+		.product-detail strong {
+			color: #2e8b57;
+			/* 어두운 연두색 텍스트 */
+		}
+
+		.button {
+			padding: 10px 20px;
+			font-size: 1em;
+			color: white;
+			background-color: #32cd32;
+			/* 연두색 */
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: background-color 0.3s;
+			align-self: center;
+			margin-top: 10px;
+		}
+
+		.button:hover {
+			background-color: #2e8b57;
+			/* 어두운 연두색 */
+		}
+
+		.home-button {
+			margin-top: 30px;
+			padding: 15px 30px;
+			font-size: 1.2em;
+		}
+	</style>
+	<script>
+		window.onload = function () {
+			// 상품 가격에 "원" 추가 및 소수점 제거
+			document.querySelectorAll('.product-cost').forEach(function (element) {
+				let cost = parseFloat(element.textContent);
+				element.textContent = cost.toFixed(0) + ' 원';
+			});
+		};
+	</script>
+</head>
+
+<body>
+	<h1>Product Detail</h1>
+	<div class="product-detail">
+		<p><strong>상품코드:</strong> <span th:text="${product.productCode}"></span></p>
+		<p><strong>상품명:</strong> <span th:text="${product.productName}"></span></p>
+		<p><strong>상품가격:</strong> <span class="product-cost" th:text="${product.productCost}"></span></p>
+		<p><strong>상품종류:</strong> <span th:text="${product.productCategory}"></span></p>
+		<button class="button" onclick="location.href='/custom-orders/new'">주문하기</button>
+	</div>
+	<button class="button home-button" onclick="location.href='/'">홈으로</button>
+</body>
+
+</html>
