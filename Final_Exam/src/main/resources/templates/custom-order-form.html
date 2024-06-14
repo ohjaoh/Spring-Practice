@@ -63,7 +63,7 @@
 
     <form th:action="@{/custom-orders}" th:object="${customOrder}" method="post">
         <div class="form-group">
-            <label for="productCode">상품코드:</label>
+            <label for="productCode">상품명</label>
             <select id="productCode" th:field="*{productCode}">
                 <option th:each="product : ${products}" th:value="${product.productCode}" th:text="${product.productName}">상품명</option>
             </select>

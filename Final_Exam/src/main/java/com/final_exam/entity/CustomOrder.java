@@ -30,7 +30,6 @@ public class CustomOrder {
 
     @ManyToOne
     @JoinColumn(name = "member_id", referencedColumnName = "user_no")
-    @NotNull(message = "Member is required")
     private Member member;
 
     @Column(name = "customization_details")

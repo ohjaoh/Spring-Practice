@@ -133,7 +133,7 @@
 		<tbody>
 			<tr th:each="order : ${customOrders}">
 				<td th:text="${order.serial_no}">주문번호</td>
-				<td th:text="${order.productCode}">상품명</td>
+				<td th:text="${order.productCode}">상품코드</td>
 				<td th:text="${order.customizationDetails}">맞춤 세부사항</td>
 				<td th:text="${order.deliveryDate}">배송 날짜</td>
 				<td th:text="${order.specialInstructions}">특별 지시사항</td>

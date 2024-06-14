@@ -52,11 +52,7 @@
 	<p>석재 밑에 세션으로 로그인해야 볼 수 있게 해둔 관리부분들을 관리자가 로그인 했을 때 가능하게 하면 될듯</p>
 	<th:block th:if="${session.user != null}">
 		<a href="/product-management" class="button">상품관리</a>
-	</th:block>
-	<th:block th:if="${session.user != null}">
 		<a href="/custom-orders-management" class="button">주문관리</a>
-	</th:block>
-	<th:block th:if="${session.user != null}">
 		<a href="/member-management" class="button">회원관리</a>
 	</th:block>
 
@@ -71,9 +67,8 @@
 
 	<th:block th:if="${session.user != null}">
 		<a href="/my-page" class="button">My Page</a>
-	</th:block>
-	<th:block th:if="${session.user != null}">
-		<a href="/user-products" class="button" >유저 상품 목록</a>
+		<a href="/user-products" class="button">유저 상품 목록</a>
+		<button onclick="location.href='/logout'">Logout</button>
 	</th:block>
 
 	<th:block th:replace="footer :: footer"></th:block>
