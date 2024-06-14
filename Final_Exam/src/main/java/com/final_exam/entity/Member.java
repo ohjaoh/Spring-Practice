@@ -1,5 +1,10 @@
 package com.final_exam.entity;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,9 +16,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import lombok.Data;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "members")
@@ -124,6 +126,7 @@ public class Member {
 
     @NotNull(message = "Birthdate is mandatory")
     @Past(message = "Birthdate must be in the past")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthdate; // 생일
 
     @Min(value = 0, message = "Points must be greater than or equal to 0")
