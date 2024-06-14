@@ -97,7 +97,7 @@ public class MemberController {
 	}
 
 	// 회원 수정 폼을 보여줍니다.
-	@GetMapping("/member-edit-admin/{userNo}")
+	@GetMapping("/member-edit/{userNo}")
 	public String showEditMemberForm(@PathVariable("userNo") int userNo, Model model, HttpSession session) {
 		Member member = memberService.getMemberByUserNo(userNo);
 		if (session.getAttribute("user") == null) {
@@ -110,42 +110,42 @@ public class MemberController {
 		model.addAttribute("member", member);
 		model.addAttribute("birthdateFormatted", birthdateFormatted);
 		session.setAttribute("visitedEditForm", true);
-		return "member-edit-admin";
+		return "member-edit";
 	}
 
 	// 회원 정보를 업데이트합니다.
 	@PutMapping("/members/{userNo}")
-    @ResponseBody
-    public ResponseEntity<String> updateMember(@PathVariable("userNo") int userNo,
-                                               @Valid @ModelAttribute("member") Member memberDetails,
-                                               BindingResult result, HttpSession session) {
-        if (result.hasErrors()) {
-            result.getAllErrors().forEach(error -> System.out.println("Validation error: " + error.getDefaultMessage()));
-            return ResponseEntity.badRequest().body("Validation errors occurred");
-        }
+	@ResponseBody
+	public ResponseEntity<String> updateMember(@PathVariable("userNo") int userNo,
+			@Valid @ModelAttribute("member") Member memberDetails, BindingResult result, HttpSession session) {
+		if (result.hasErrors()) {
+			result.getAllErrors()
+					.forEach(error -> System.out.println("Validation error: " + error.getDefaultMessage()));
+			return ResponseEntity.badRequest().body("Validation errors occurred");
+		}
 
-        Member member = memberService.getMemberByUserNo(userNo);
+		Member member = memberService.getMemberByUserNo(userNo);
 
-        if (member != null) {
-            member.setId(memberDetails.getId());
-            member.setRealName(memberDetails.getRealName());
-            member.setPassword(memberDetails.getPassword());
-            member.setAddress(memberDetails.getAddress());
-            member.setPhoneNumber(memberDetails.getPhoneNumber());
-            member.setEmail(memberDetails.getEmail());
-            member.setBirthdate(memberDetails.getBirthdate());
-            member.setPoints(memberDetails.getPoints());
-            member.setTotalPaymentAmount(memberDetails.getTotalPaymentAmount());
+		if (member != null) {
+			member.setId(memberDetails.getId());
+			member.setRealName(memberDetails.getRealName());
+			member.setPassword(memberDetails.getPassword());
+			member.setAddress(memberDetails.getAddress());
+			member.setPhoneNumber(memberDetails.getPhoneNumber());
+			member.setEmail(memberDetails.getEmail());
+			member.setBirthdate(memberDetails.getBirthdate());
+			member.setPoints(memberDetails.getPoints());
+			member.setTotalPaymentAmount(memberDetails.getTotalPaymentAmount());
 
-            memberService.saveMember(member);
-            session.setAttribute("memberUpdated", true);
-            session.removeAttribute("visitedEditForm");
+			memberService.saveMember(member);
+			session.setAttribute("memberUpdated", true);
+			session.removeAttribute("visitedEditForm");
 
-            return ResponseEntity.ok("Member updated successfully");
-        }
+			return ResponseEntity.ok("Member updated successfully");
+		}
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Member not found");
-    }
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Member not found");
+	}
 
 	// 회원을 삭제합니다.
 	@DeleteMapping("/members/{userNo}")
