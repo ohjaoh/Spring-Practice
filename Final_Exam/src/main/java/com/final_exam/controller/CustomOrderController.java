@@ -101,7 +101,12 @@ public class CustomOrderController {
 
 	// 맞춤 주문 목록 페이지로 이동
 	@GetMapping("/custom-orders")
-	public String viewCustomOrderList(Model model) {
+	public String viewCustomOrderList(Model model , HttpSession session) {
+		// 세션에서 "user" 속성을 확인합니다. 여기를 관리자로 변경해야함
+        if (session.getAttribute("user") == null) {
+            // "user"가 없으면 index.html로 리다이렉트합니다.
+            return "redirect:/";
+        }
 		List<CustomOrder> customOrders = customOrderService.getAllCustomOrders();
 		model.addAttribute("customOrders", customOrders);
 		
@@ -111,6 +116,11 @@ public class CustomOrderController {
 	// 맞춤 주문 수정 페이지로 이동
 	@GetMapping("/custom-orders/edit/{id}")
 	public String showEditCustomOrderForm(@PathVariable("id") int id, Model model, HttpSession session) {
+		// 세션에서 "user" 속성을 확인합니다. 여기를 관리자로 변경해야함
+        if (session.getAttribute("user") == null) {
+            // "user"가 없으면 index.html로 리다이렉트합니다.
+            return "redirect:/";
+        }
 		CustomOrder customOrder = customOrderService.getCustomOrderById(id);
 		List<Product> products = productService.getAllProducts();
 		model.addAttribute("customOrder", customOrder);

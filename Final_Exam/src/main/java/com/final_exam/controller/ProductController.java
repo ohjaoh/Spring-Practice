@@ -41,13 +41,23 @@ public class ProductController {
 
 	// 제품 관리 페이지를 반환합니다.
 	@GetMapping("/product-management")
-	public String viewProductManagementPage() {
+	public String viewProductManagementPage(HttpSession session) {
+		// 세션에서 "user" 속성을 확인합니다. 여기를 관리자로 변경해야함
+        if (session.getAttribute("user") == null) {
+            // "user"가 없으면 index.html로 리다이렉트합니다.
+            return "redirect:/";
+        }
 		return "product-management";
 	}
 
 	// 제품 입력 폼을 보여줍니다.
 	@GetMapping("/product-form")
 	public String showProductForm(Model model, HttpSession session) {
+		// 세션에서 "user" 속성을 확인합니다. 여기를 관리자로 변경해야함
+        if (session.getAttribute("user") == null) {
+            // "user"가 없으면 index.html로 리다이렉트합니다.
+            return "redirect:/";
+        }
 		model.addAttribute("product", new Product());
 		session.setAttribute("visitedProductForm", true);
 		return "product-form";
@@ -69,6 +79,11 @@ public class ProductController {
 	// 제품 목록을 보여줍니다.
 	@GetMapping("/product-list")
 	public String viewProductList(Model model, HttpSession session) {
+		// 세션에서 "user" 속성을 확인합니다. 여기를 관리자로 변경해야함
+        if (session.getAttribute("user") == null) {
+            // "user"가 없으면 index.html로 리다이렉트합니다.
+            return "redirect:/";
+        }
 		session.removeAttribute("productSaved");
 		List<Product> products = productService.getAllProducts();
 		model.addAttribute("products", products);
@@ -78,6 +93,11 @@ public class ProductController {
 	// 제품 수정 폼을 보여줍니다.
 	@GetMapping("/product-edit/{id}")
 	public String showEditProductForm(@PathVariable("id") int id, Model model, HttpSession session) {
+		// 세션에서 "user" 속성을 확인합니다. 여기를 관리자로 변경해야함
+        if (session.getAttribute("user") == null) {
+            // "user"가 없으면 index.html로 리다이렉트합니다.
+            return "redirect:/";
+        }
 		Product product = productService.getProductById(id); // 여기서 항상 최신 데이터를 가져옵니다.
 		model.addAttribute("product", product);
 		session.setAttribute("visitedEditForm", true);

@@ -14,11 +14,7 @@ public class CacheControlFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-        // 특정 URL 패턴에 대해 캐시 예외 처리
-        String requestURI = httpRequest.getRequestURI();
-        if (!isCacheExempt(requestURI)) {
-            expireCache(httpResponse);
-        }
+        expireCache(httpResponse);
 
         chain.doFilter(request, response);
     }
@@ -27,11 +23,5 @@ public class CacheControlFilter implements Filter {
         response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
         response.setHeader("Pragma", "no-cache");
         response.setDateHeader("Expires", 0);
-    }
-
-    private boolean isCacheExempt(String requestURI) {
-        // 캐시 예외 처리를 할 URL 패턴 정의
-        return requestURI.startsWith("/index") || requestURI.startsWith("/product-list")
-               || requestURI.startsWith("/login") || requestURI.startsWith("/logout");
     }
 }

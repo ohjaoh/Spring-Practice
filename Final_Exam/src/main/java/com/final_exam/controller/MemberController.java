@@ -85,6 +85,11 @@ public class MemberController {
     // 회원 목록을 보여줍니다.
     @GetMapping("/member-list")
     public String viewMemberList(Model model, HttpSession session) {
+    	// 세션에서 "user" 속성을 확인합니다. 여기를 관리자로 변경해야함
+        if (session.getAttribute("user") == null) {
+            // "user"가 없으면 index.html로 리다이렉트합니다.
+            return "redirect:/";
+        }
         session.removeAttribute("memberSaved");
         List<Member> members = memberService.getAllMembers();
         model.addAttribute("members", members);
@@ -92,12 +97,17 @@ public class MemberController {
     }
 
     // 회원 수정 폼을 보여줍니다.
-    @GetMapping("/member-edit/{userNo}")
+    @GetMapping("/member-edit-admin/{userNo}")
     public String showEditMemberForm(@PathVariable("userNo") int userNo, Model model, HttpSession session) {
         Member member = memberService.getMemberByUserNo(userNo); // 여기서 항상 최신 데이터를 가져옵니다.
+        // 세션에서 "user" 속성을 확인합니다. 여기를 관리자로 변경해야함
+        if (session.getAttribute("user") == null) {
+            // "user"가 없으면 index.html로 리다이렉트합니다.
+            return "redirect:/";
+        }
         model.addAttribute("member", member);
         session.setAttribute("visitedEditForm", true);
-        return "member-edit";
+        return "member-edit-admin";
     }
 
     // 회원 정보를 업데이트합니다.
