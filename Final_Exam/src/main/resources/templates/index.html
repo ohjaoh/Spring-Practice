@@ -68,7 +68,7 @@
 	<th:block th:if="${session.user != null}">
 		<a href="/my-page" class="button">My Page</a>
 		<a href="/user-products" class="button">유저 상품 목록</a>
-		<button onclick="location.href='/logout'">Logout</button>
+		<a onclick="location.href='/logout'" class="button">Logout</a>
 	</th:block>
 
 	<th:block th:replace="footer :: footer"></th:block>

@@ -52,8 +52,8 @@
 		<div class="info">Points: <span th:text="${member.points}"></span></div>
 		<div class="info">Total Payment: <span th:text="${member.totalPaymentAmount}"></span></div>
 	</div>
-	<button class="button"
-		th:onclick="'location.href=\'/members/edit/' + '\''">Edit</button>
+	<button type="button"
+		th:onclick="|location.href='@{/member-edit-admin/{userNo}(userNo=${member.user_no})}'|">Edit</button>
 	<th:block th:replace="footer :: footer"></th:block>
 </body>
 
