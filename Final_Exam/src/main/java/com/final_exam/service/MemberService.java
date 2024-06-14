@@ -52,8 +52,12 @@ public class MemberService {
     }
     
     public Member authenticate(String id, String password) {
-        return memberRepository.findByIdAndPassword(id, password);
-    }
+		Member member = memberRepository.findById(id);
+		if (member != null && member.getPassword().equals(password) && member!=null && member.getId().equals(id)) {
+			return member;
+		}
+		return null;
+	}
     
     public Member findById(String id) {
         return memberRepository.findById(id);
