@@ -44,6 +44,23 @@
 			background-color: rgba(102, 205, 170, 0.8);
 		}
 	</style>
+	<script>
+		// 브라우저 캐시를 비우는 JavaScript 코드
+		window.onload = function () {
+			if ('caches' in window) {
+				caches.keys().then(function (cacheNames) {
+					cacheNames.forEach(function (cacheName) {
+						caches.delete(cacheName);
+					});
+				});
+			}
+			// 뒤로 가기 버튼 무효화
+			window.history.pushState(null, null, window.location.href);
+			window.onpopstate = function () {
+				window.history.go(1);
+			};
+		};
+	</script>
 </head>
 
 <body>
