@@ -114,38 +114,40 @@ public class MemberController {
 	}
 
 	// 회원 정보를 업데이트합니다.
+	// 회원 정보를 업데이트합니다.
 	@PutMapping("/members/{userNo}")
-	@ResponseBody
-	public ResponseEntity<String> updateMember(@PathVariable("userNo") int userNo,
-			@Valid @ModelAttribute("member") Member memberDetails, BindingResult result, HttpSession session) {
-		if (result.hasErrors()) {
-			result.getAllErrors()
-					.forEach(error -> System.out.println("Validation error: " + error.getDefaultMessage()));
-			return ResponseEntity.badRequest().body("Validation errors occurred");
-		}
+	public String updateMember(@PathVariable("userNo") int userNo,
+	        @Valid @ModelAttribute("member") Member memberDetails, BindingResult result, HttpSession session, Model model) {
+	    if (result.hasErrors()) {
+	        result.getAllErrors()
+	                .forEach(error -> System.out.println("Validation error: " + error.getDefaultMessage()));
+	        model.addAttribute("member", memberDetails);
+	        return "member-edit";
+	    }
 
-		Member member = memberService.getMemberByUserNo(userNo);
+	    Member member = memberService.getMemberByUserNo(userNo);
 
-		if (member != null) {
-			member.setId(memberDetails.getId());
-			member.setRealName(memberDetails.getRealName());
-			member.setPassword(memberDetails.getPassword());
-			member.setAddress(memberDetails.getAddress());
-			member.setPhoneNumber(memberDetails.getPhoneNumber());
-			member.setEmail(memberDetails.getEmail());
-			member.setBirthdate(memberDetails.getBirthdate());
-			member.setPoints(memberDetails.getPoints());
-			member.setTotalPaymentAmount(memberDetails.getTotalPaymentAmount());
+	    if (member != null) {
+	        member.setId(memberDetails.getId());
+	        member.setRealName(memberDetails.getRealName());
+	        member.setPassword(memberDetails.getPassword());
+	        member.setAddress(memberDetails.getAddress());
+	        member.setPhoneNumber(memberDetails.getPhoneNumber());
+	        member.setEmail(memberDetails.getEmail());
+	        member.setBirthdate(memberDetails.getBirthdate());
+	        member.setPoints(memberDetails.getPoints());
+	        member.setTotalPaymentAmount(memberDetails.getTotalPaymentAmount());
 
-			memberService.saveMember(member);
-			session.setAttribute("memberUpdated", true);
-			session.removeAttribute("visitedEditForm");
+	        memberService.saveMember(member);
+	        session.setAttribute("memberUpdated", true);
+	        session.removeAttribute("visitedEditForm");
 
-			return ResponseEntity.ok("Member updated successfully");
-		}
+	        return "redirect:/my-page";
+	    }
 
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Member not found");
+	    return "redirect:/";
 	}
+
 
 	// 회원을 삭제합니다.
 	@DeleteMapping("/members/{userNo}")

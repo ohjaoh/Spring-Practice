@@ -92,6 +92,11 @@
             padding: 15px 30px; /* 홈으로 버튼 크기 증가 */
             font-size: 1.2em; /* 홈으로 버튼 폰트 크기 증가 */
         }
+        
+		.readonly {
+			background-color: #f0f0f0;
+		}
+
     </style>
 </head>
 
@@ -100,7 +105,7 @@
     <form th:action="@{/custom-orders/{id}(id=${customOrder.serial_no})}" th:object="${customOrder}" method="post">
         <div class="form-group">
             <label for="productCode">Product Code:</label>
-            <input type="text" id="productCode" th:field="*{productCode}">
+            <input type="text" id="productCode" th:field="*{productCode}"class="readonly" readonly>
         </div>
         <div th:if="${#fields.hasErrors('productCode')}" th:errors="*{productCode}"> <!-- 유효성 검사 오류 메시지 표시 --></div>
 
