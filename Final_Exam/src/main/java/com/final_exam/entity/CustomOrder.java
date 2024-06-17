@@ -20,100 +20,147 @@ import lombok.Data;
 @Table(name = "custom_orders")
 @Data
 public class CustomOrder {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int serial_no;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int serial_no;
 
-    @Column(name = "product_code")
-    @NotNull(message = "Product code is required")
-    private String productCode;
+	@ManyToOne
+	@JoinColumn(name = "productCode", referencedColumnName = "productCode")
+	private Product product;
 
-    @ManyToOne
-    @JoinColumn(name = "member_id", referencedColumnName = "user_no")
-    private Member member;
+	@Column(name = "order_product_code")
+	private String orderProductCode;
 
-    @Column(name = "customization_details")
-    private String customizationDetails;
+	@Column(name = "order_product_name")
+	private String orderProductName;
 
-    @Column(name = "delivery_date")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotNull(message = "Delivery date is required")
-    @FutureOrPresent(message = "Delivery date must be today or in the future")
-    private Date deliveryDate;
+	@ManyToOne
+	@JoinColumn(name = "member_id", referencedColumnName = "user_no")
+	private Member member;
 
-    @Column(name = "special_instructions")
-    private String specialInstructions;
+	@Column(name = "customization_details")
+	private String customizationDetails;
 
-    @Column(name = "order_name")
-    private String orderName;
+	@Column(name = "delivery_date")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@NotNull(message = "Delivery date is required")
+	@FutureOrPresent(message = "Delivery date must be today or in the future")
+	private Date deliveryDate;
 
-    @Column(name = "order_phone_number")
-    private String orderPhoneNumber;
+	@Column(name = "special_instructions")
+	private String specialInstructions;
 
-    @Column(name = "order_address")
-    private String orderAddress;
+	@Column(name = "order_name")
+	private String orderName;
 
-    // 수동으로 추가한 getter 및 setter
-    public int getSerial_no() {
-        return serial_no;
-    }
+	@Column(name = "order_phone_number")
+	private String orderPhoneNumber;
 
-    public void setSerial_no(int serial_no) {
-        this.serial_no = serial_no;
-    }
+	@Column(name = "order_address")
+	private String orderAddress;
 
-    public String getProductCode() {
-        return productCode;
-    }
+	// 수동으로 추가한 getter 및 setter
+	public int getSerial_no() {
+		return serial_no;
+	}
 
-    public void setProductCode(String productCode) {
-        this.productCode = productCode;
-    }
+	public void setSerial_no(int serial_no) {
+		this.serial_no = serial_no;
+	}
 
-    public Member getMember() {
-        return member;
-    }
+	public Product getProduct() {
+		return product;
+	}
 
-    public void setMember(Member member) {
-        this.member = member;
-        this.orderName = member.getRealName(); // 회원의 이름을 주문자 이름으로 설정
-        this.orderPhoneNumber = member.getPhoneNumber(); // 회원의 전화번호를 주문자 전화번호로 설정
-        this.orderAddress = member.getAddress(); // 회원의 주소를 주문자 주소로 설정
-    }
+	public void setProduct(Product product) {
+		this.product = product;
+		if (product != null) {
+			this.orderProductName = product.getProductName(); // 상품명을 받아온다
 
-    public String getCustomizationDetails() {
-        return customizationDetails;
-    }
+		} else {
+			this.orderProductName = null;
 
-    public void setCustomizationDetails(String customizationDetails) {
-        this.customizationDetails = customizationDetails;
-    }
+		}
+	}
 
-    public Date getDeliveryDate() {
-        return deliveryDate;
-    }
+	public String getOrderProductCode() {
+		return orderProductCode;
+	}
 
-    public void setDeliveryDate(Date deliveryDate) {
-        this.deliveryDate = deliveryDate;
-    }
+	public void setOrderProductCode(String orderProductCode) {
+		this.orderProductCode = orderProductCode;
+	}
 
-    public String getSpecialInstructions() {
-        return specialInstructions;
-    }
+	public String getOrderProductName() {
+		return orderProductName;
+	}
 
-    public void setSpecialInstructions(String specialInstructions) {
-        this.specialInstructions = specialInstructions;
-    }
+	public void setOrderProductName(String orderProductName) {
+		this.orderProductName = orderProductName;
+	}
 
-    public String getOrderName() {
-        return orderName;
-    }
+	public Member getMember() {
+		return member;
+	}
 
-    public String getOrderPhoneNumber() {
-        return orderPhoneNumber;
-    }
+	public void setMember(Member member) {
+		this.member = member;
+		if (member != null) {
+			this.orderName = member.getRealName(); // 회원의 이름을 주문자 이름으로 설정
+			this.orderPhoneNumber = member.getPhoneNumber(); // 회원의 전화번호를 주문자 전화번호로 설정
+			this.orderAddress = member.getAddress(); // 회원의 주소를 주문자 주소로 설정
+		} else {
+			this.orderName = null;
+			this.orderPhoneNumber = null;
+			this.orderAddress = null;
+		}
+	}
 
-    public String getOrderAddress() {
-        return orderAddress;
-    }
+	public String getCustomizationDetails() {
+		return customizationDetails;
+	}
+
+	public void setCustomizationDetails(String customizationDetails) {
+		this.customizationDetails = customizationDetails;
+	}
+
+	public Date getDeliveryDate() {
+		return deliveryDate;
+	}
+
+	public void setDeliveryDate(Date deliveryDate) {
+		this.deliveryDate = deliveryDate;
+	}
+
+	public String getSpecialInstructions() {
+		return specialInstructions;
+	}
+
+	public void setSpecialInstructions(String specialInstructions) {
+		this.specialInstructions = specialInstructions;
+	}
+
+	public String getOrderName() {
+		return orderName;
+	}
+
+	public void setOrderName(String orderName) {
+		this.orderName = orderName;
+	}
+
+	public String getOrderPhoneNumber() {
+		return orderPhoneNumber;
+	}
+
+	public void setOrderPhoneNumber(String orderPhoneNumber) {
+		this.orderPhoneNumber = orderPhoneNumber;
+	}
+
+	public String getOrderAddress() {
+		return orderAddress;
+	}
+
+	public void setOrderAddress(String orderAddress) {
+		this.orderAddress = orderAddress;
+	}
 }

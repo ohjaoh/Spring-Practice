@@ -3,7 +3,6 @@
 <head>
     <title>Custom Order Form</title>
     <style>
-        /* Your existing CSS */
         body {
             display: flex;
             flex-direction: column;
@@ -58,20 +57,19 @@
     </style>
 </head>
 <body>
-    <th:block th:replace="~{header :: header}"></th:block>
     <h1>맞춤 주문 폼</h1>
 
     <form th:action="@{/custom-orders}" th:object="${customOrder}" method="post">
         <div class="form-group">
-            <label for="productCode">상품명</label>
-            <select id="productCode" th:field="*{productCode}">
+            <label for="product">상품명</label>
+            <select id="product" th:field="*{product}">
                 <option th:each="product : ${products}" th:value="${product.productCode}" th:text="${product.productName}">상품명</option>
             </select>
-            <div class="error" th:if="${#fields.hasErrors('productCode')}" th:errors="*{productCode}"></div>
+            <div class="error" th:if="${#fields.hasErrors('product')}" th:errors="*{product}"></div>
         </div>
 
         <div class="form-group">
-            <label for="customizationDetails">상품커스텀요청사항:</label>
+            <label for="customizationDetails">상품 커스텀 요청사항:</label>
             <input type="text" id="customizationDetails" th:field="*{customizationDetails}">
             <div class="error" th:if="${#fields.hasErrors('customizationDetails')}" th:errors="*{customizationDetails}"></div>
         </div>
@@ -89,6 +87,16 @@
         </div>
 
         <div class="form-group">
+            <label for="orderProductCode">주문 상품 코드:</label>
+            <input type="text" id="orderProductCode" th:field="*{orderProductCode}" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="orderProductName">주문 상품 이름:</label>
+            <input type="text" id="orderProductName" th:field="*{orderProductName}" readonly>
+        </div>
+
+        <div class="form-group">
             <label>주문자 이름:</label>
             <span th:text="${customOrder.member.realName}"></span>
         </div>
@@ -103,9 +111,7 @@
             <span th:text="${customOrder.member.address}"></span>
         </div>
 
-        <button type="submit">Save Order</button>
+        <button type="submit">저장</button>
     </form>
-
-    <th:block th:replace="~{footer :: footer}"></th:block>
 </body>
 </html>

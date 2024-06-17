@@ -133,7 +133,7 @@
 		<tbody>
 			<tr th:each="order : ${customOrders}">
 				<td th:text="${order.serial_no}">주문번호</td>
-				<td th:text="${order.productCode}">상품코드</td>
+				<td th:text="${order.orderProductName}">상품명</td>
 				<td th:text="${order.customizationDetails}">맞춤 세부사항</td>
 				<td th:text="${#dates.format(order.deliveryDate, 'yyyy-MM-dd')}">배송 날짜</td>
 				<td th:text="${order.specialInstructions}">특별 지시사항</td>
@@ -150,7 +150,7 @@
 			</tr>
 		</tbody>
 	</table>
-	<button class="button" onclick="location.href='/custom-orders/new'">새 커스텀 주문 추가</button> <!-- 커스텀 주문 폼으로 이동 -->
+	<button class="button" onclick="location.href='/custom-orders/new'">새 커스텀 주문 추가</button>
 	<button onclick="location.href='/'">홈으로</button>
 	<th:block th:replace="~{footer :: footer}"></th:block>
 </body>
