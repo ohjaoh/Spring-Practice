@@ -122,7 +122,9 @@ public class Member {
     private String address; // 주소
 
     @NotBlank(message = "Phone number is mandatory")
-    private String phoneNumber; // 전화번호
+    @Pattern(regexp = "^\\d{2,3}-\\d{3,4}-\\d{4}$", message = "전화번호 형식이 올바르지 않습니다.")
+    private String phoneNumber;
+
 
     @NotBlank(message = "Email is mandatory")
     @Email(message = "Email should be valid")
@@ -134,7 +136,7 @@ public class Member {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthdate; // 생일
 
-    @Min(value = 0, message = "Points must be greater than or equal to 0")
+    @Min(value = 50, message = "Points must be greater than or equal to 0")
     private int points; // 포인트
 
     @Min(value = 0, message = "Total payment amount must be greater than or equal to 0")
