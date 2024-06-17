@@ -68,9 +68,10 @@
 	<h1>장인공방에 오신것을 환영합니다.</h1>
 	<p>석재 밑에 세션으로 로그인해야 볼 수 있게 해둔 관리부분들을 관리자가 로그인 했을 때 가능하게 하면 될듯</p>
 	<th:block th:if="${session.user != null}">
-		<a href="/product-management" class="button">상품관리</a>
-		<a href="/custom-orders-management" class="button">주문관리</a>
-		<a href="/member-management" class="button">회원관리</a>
+
+		<a href="/product-list" class="button">상품관리</a>
+		<a href="/custom-orders" class="button">주문관리</a>
+		<a href="/member-list" class="button">회원관리</a>
 	</th:block>
 
 

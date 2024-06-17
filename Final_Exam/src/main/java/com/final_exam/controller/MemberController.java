@@ -68,14 +68,22 @@ public class MemberController {
 			HttpSession session) {
 		// 유효성 검사에 오류가 있는 경우 폼을 다시 반환합니다.
 		if (result.hasErrors()) {
+			// 유효성 검사 오류 메시지 출력
+			result.getAllErrors()
+					.forEach(error -> System.out.println("Validation error: " + error.getDefaultMessage()));
+
 			return "member-form";
 		}
+		// 새로운 회원의 포인트를 50으로 설정
+		member.setPoints(50);
 		// ID 중복 체크
 		if (memberService.isIdTaken(member.getId())) {
 			result.rejectValue("id", "error.member", "이미 존재하는 ID입니다.");
 			return "member-form";
 		}
+		System.out.println("유효성통과");
 		// 유효성 검사가 통과되면 회원을 저장합니다.
+		
 		memberService.saveMember(member);
 		session.setAttribute("memberSaved", true);
 		session.removeAttribute("visitedMemberForm");
