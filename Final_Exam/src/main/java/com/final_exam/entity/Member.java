@@ -121,9 +121,10 @@ public class Member {
     @NotBlank(message = "Address is mandatory")
     private String address; // 주소
 
-    @NotBlank(message = "Phone number is mandatory")
-    @Pattern(regexp = "^\\d{2,3}-\\d{3,4}-\\d{4}$", message = "전화번호 형식이 올바르지 않습니다.")
-    private String phoneNumber;
+    @NotBlank(message = "Password is mandatory")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}.*$", message = "비밀번호는 6자리 이상이어야 하며, 숫자와 영문자를 포함해야 합니다.")
+    private String password; // 비밀번호
+
 
 
     @NotBlank(message = "Email is mandatory")
