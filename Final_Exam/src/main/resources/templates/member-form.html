@@ -204,7 +204,7 @@
 
 		<div class="form-group">
 			<label for="phoneNumber">전화번호:</label>
-			<input type="text" id="phoneNumber" th:field="*{phoneNumber}">
+			<input type="text" id="phoneNumber" th:field="*{phoneNumber}" placeholder="000-0000-0000">
 			<div th:if="${#fields.hasErrors('phoneNumber')}">
 				<p th:errors="*{phoneNumber}">전화번호 오류</p>
 			</div>
