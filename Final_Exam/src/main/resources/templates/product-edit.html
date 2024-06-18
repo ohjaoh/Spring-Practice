@@ -147,6 +147,21 @@
         </select>
         <div th:if="${#fields.hasErrors('productCategory')}" th:errors="*{productCategory}"> <!-- 유효성 검사 오류 메시지 표시 --></div>
 
+        <div class="form-group">
+			<label for="productColor">상품색상:</label>
+			<select id="productColor" th:field="*{productColor}">
+				<option value="흰색">흰색</option>
+				<option value="검정색">검정색</option>
+				<option value="네이비">네이비</option>
+				<option value="그레이">그레이</option>
+			</select>
+		</div>
+		<div th:if="${#fields.hasErrors('productColor')}" th:errors="*{productColor}"> <!-- 유효성 검사 오류 메시지 표시 --></div>
+		
+        <label for="SalesRate">총판매수량:</label>
+        <input type="text" id="SalesRate" th:field="*{SalesRate}">
+        <div th:if="${#fields.hasErrors('SalesRate')}" th:errors="*{SalesRate}"> <!-- 유효성 검사 오류 메시지 표시 --></div>		
+
         <button type="button" class="button" onclick="submitEditForm()">Save Product</button>
     </form>
     <button class="button" onclick="location.href='/'">Back to Home</button>

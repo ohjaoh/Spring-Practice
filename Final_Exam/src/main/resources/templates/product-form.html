@@ -2,136 +2,167 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Add New Product</title>
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            background: linear-gradient(135deg, #f0fff0, #c9fdd7); /* 밝은 연두색 그라데이션 배경 */
-            font-family: Arial, sans-serif;
-        }
+	<title>Add New Product</title>
+	<style>
+		body {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			height: 100vh;
+			margin: 0;
+			background: linear-gradient(135deg, #f0fff0, #c9fdd7);
+			/* 밝은 연두색 그라데이션 배경 */
+			font-family: Arial, sans-serif;
+		}
 
-        h1 {
-            font-size: 2.5em;
-            color: #32cd32; /* 연두색 제목 */
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-            margin-bottom: 20px;
-        }
+		h1 {
+			font-size: 2.5em;
+			color: #32cd32;
+			/* 연두색 제목 */
+			text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+			margin-bottom: 20px;
+		}
 
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            border: 1px solid #32cd32;
-            padding: 30px; /* 패딩을 늘려서 더 큰 카드뷰 */
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.8); /* 약간의 투명도 */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px); /* 글래스모피즘 효과 */
-            margin-bottom: 20px;
-            max-width: 500px; /* 카드뷰 최대 너비 설정 */
-            width: 100%;
-        }
+		form {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			border: 1px solid #32cd32;
+			padding: 30px;
+			/* 패딩을 늘려서 더 큰 카드뷰 */
+			border-radius: 10px;
+			background: rgba(255, 255, 255, 0.8);
+			/* 약간의 투명도 */
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+			backdrop-filter: blur(10px);
+			/* 글래스모피즘 효과 */
+			margin-bottom: 20px;
+			max-width: 500px;
+			/* 카드뷰 최대 너비 설정 */
+			width: 100%;
+		}
 
-        .form-group {
-            display: flex;
-            justify-content: flex-start; /* 왼쪽 정렬 */
-            align-items: center;
-            width: 100%;
-            margin-bottom: 10px;
-        }
+		.form-group {
+			display: flex;
+			justify-content: flex-start;
+			/* 왼쪽 정렬 */
+			align-items: center;
+			width: 100%;
+			margin-bottom: 10px;
+		}
 
-        label {
-            color: #32cd32;
-            margin-right: 10px;
-            min-width: 100px; /* 라벨의 최소 너비를 설정하여 입력창과의 간격을 조정 */
-        }
+		label {
+			color: #32cd32;
+			margin-right: 10px;
+			min-width: 100px;
+			/* 라벨의 최소 너비를 설정하여 입력창과의 간격을 조정 */
+		}
 
-        input, select {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #32cd32;
-            border-radius: 5px;
-            background: rgba(255, 255, 255, 0.8); /* 약간의 투명도 */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
+		input,
+		select {
+			flex: 1;
+			padding: 10px;
+			border: 1px solid #32cd32;
+			border-radius: 5px;
+			background: rgba(255, 255, 255, 0.8);
+			/* 약간의 투명도 */
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		}
 
-        select {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');
-            background-repeat: no-repeat;
-            background-position: right 10px center;
-            background-size: 12px 12px;
-        }
+		select {
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			appearance: none;
+			background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');
+			background-repeat: no-repeat;
+			background-position: right 10px center;
+			background-size: 12px 12px;
+		}
 
-        .button {
-            padding: 10px 20px; /* 원래대로 돌린 저장 버튼 */
-            font-size: 1em; /* 원래 크기 */
-            color: white;
-            background-color: #32cd32; /* 연두색 */
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            align-self: center; /* 버튼을 중앙으로 배치 */
-            margin-top: 10px;
-        }
+		.button {
+			padding: 10px 20px;
+			/* 원래대로 돌린 저장 버튼 */
+			font-size: 1em;
+			/* 원래 크기 */
+			color: white;
+			background-color: #32cd32;
+			/* 연두색 */
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: background-color 0.3s;
+			align-self: center;
+			/* 버튼을 중앙으로 배치 */
+			margin-top: 10px;
+		}
 
-        .button:hover {
-            background-color: #2e8b57; /* 어두운 연두색 */
-        }
+		.button:hover {
+			background-color: #2e8b57;
+			/* 어두운 연두색 */
+		}
 
-        .home-button {
-            margin-top: 30px; /* 폼과의 간격을 추가 */
-            padding: 15px 30px; /* 홈으로 버튼 크기 증가 */
-            font-size: 1.2em; /* 홈으로 버튼 폰트 크기 증가 */
-        }
-    </style>
-    <script>
-        // 페이지 로드 시 폼 필드를 초기화합니다.
-        window.onload = function() {
-            document.getElementById('productName').value = '';
-            document.getElementById('productCost').value = '';
-            document.getElementById('productCategory').selectedIndex = 0;
-        };
-    </script>
+		.home-button {
+			margin-top: 30px;
+			/* 폼과의 간격을 추가 */
+			padding: 15px 30px;
+			/* 홈으로 버튼 크기 증가 */
+			font-size: 1.2em;
+			/* 홈으로 버튼 폰트 크기 증가 */
+		}
+	</style>
+	<script>
+		// 페이지 로드 시 폼 필드를 초기화합니다.
+		window.onload = function () {
+			document.getElementById('productName').value = '';
+			document.getElementById('productCost').value = '';
+			document.getElementById('productCategory').selectedIndex = 0;
+		};
+	</script>
 </head>
 
 <body>
-    <h1>새상품추가하기~</h1>
-    <form th:action="@{/products}" th:object="${product}" method="post">
-        <div class="form-group">
-            <label for="productName">상품명:</label>
-            <input type="text" id="productName" th:field="*{productName}">
-        </div>
-        <div th:if="${#fields.hasErrors('productName')}" th:errors="*{productName}"> <!-- 유효성 검사 오류 메시지 표시 --></div>
+	<h1>새상품추가하기~</h1>
+	<form th:action="@{/products}" th:object="${product}" method="post">
+		<div class="form-group">
+			<label for="productName">상품명:</label>
+			<input type="text" id="productName" th:field="*{productName}">
+		</div>
+		<div th:if="${#fields.hasErrors('productName')}" th:errors="*{productName}"> <!-- 유효성 검사 오류 메시지 표시 --></div>
 
-        <div class="form-group">
-            <label for="productCost">상품가격:</label>
-            <input type="text" id="productCost" th:field="*{productCost}">
-        </div>
-        <div th:if="${#fields.hasErrors('productCost')}" th:errors="*{productCost}"> <!-- 유효성 검사 오류 메시지 표시 --></div>
+		<div class="form-group">
+			<label for="productCost">상품가격:</label>
+			<input type="text" id="productCost" th:field="*{productCost}">
+		</div>
+		<div th:if="${#fields.hasErrors('productCost')}" th:errors="*{productCost}"> <!-- 유효성 검사 오류 메시지 표시 --></div>
 
-        <div class="form-group">
-            <label for="productCategory">상품종류:</label>
-            <select id="productCategory" th:field="*{productCategory}">
-                <option value="전자제품">전자제품</option>
-                <option value="생필품">생필품</option>
-                <option value="책">책</option>
-                <option value="음료">음료</option>
-            </select>
-        </div>
-        <div th:if="${#fields.hasErrors('productCategory')}" th:errors="*{productCategory}"> <!-- 유효성 검사 오류 메시지 표시 --></div>
+		<div class="form-group">
+			<label for="productCategory">상품종류:</label>
+			<select id="productCategory" th:field="*{productCategory}">
+				<option value="전자제품">전자제품</option>
+				<option value="생필품">생필품</option>
+				<option value="책">책</option>
+				<option value="음료">음료</option>
+			</select>
+		</div>
+		<div th:if="${#fields.hasErrors('productCategory')}" th:errors="*{productCategory}"> <!-- 유효성 검사 오류 메시지 표시 -->
+		</div>
 
-        <button type="submit" class="button">Save</button>
-    </form>
-    <button onclick="location.href='/'" class="button home-button">홈으로</button>
+		<div class="form-group">
+			<label for="productColor">상품색상:</label>
+			<select id="productColor" th:field="*{productColor}">
+				<option value="흰색">흰색</option>
+				<option value="검정색">검정색</option>
+				<option value="네이비">네이비</option>
+				<option value="그레이">그레이</option>
+			</select>
+		</div>
+		<div th:if="${#fields.hasErrors('productColor')}" th:errors="*{productColor}"> <!-- 유효성 검사 오류 메시지 표시 --></div>
+
+
+		<button type="submit" class="button">Save</button>
+	</form>
+	<button onclick="location.href='/'" class="button home-button">홈으로</button>
 </body>
 
 </html>

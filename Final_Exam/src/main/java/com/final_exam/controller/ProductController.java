@@ -120,10 +120,12 @@ public class ProductController {
 	    
 	    // 제품이 존재하는 경우
 	    if (product != null) {
-	        // 제품의 이름, 가격, 카테고리를 업데이트합니다.
+	        // 제품의 이름, 가격, 카테고리, 색상을 업데이트합니다.
 	        product.setProductName(productDetails.getProductName());
 	        product.setProductCost(productDetails.getProductCost());
 	        product.setProductCategory(productDetails.getProductCategory());
+	        product.setProductColor(productDetails.getProductColor());;
+	        product.setSalesRate(productDetails.getSalesRate());
 	        
 	        // 업데이트된 제품 정보를 저장합니다.
 	        productService.saveProduct(product);
