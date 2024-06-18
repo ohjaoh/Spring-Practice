@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.final_exam.entity.Member;
 import com.final_exam.service.MemberService;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -24,8 +25,12 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam String id, @RequestParam String password, HttpSession session, Model model) {
+    public String login(@RequestParam String id, @RequestParam String password, HttpSession session, Model model, HttpServletResponse response) {
         Member member = memberService.authenticate(id, password);
+		// 캐시 제어 헤더 설정
+		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+		response.setHeader("Pragma", "no-cache");
+		response.setHeader("Expires", "0");
         if (member != null) {
             session.setAttribute("user", new User(member.getId()));
             return "redirect:/";
