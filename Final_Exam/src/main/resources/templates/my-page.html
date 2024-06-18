@@ -36,6 +36,27 @@
 			font-size: 1.2em;
 			color: #333;
 		}
+		
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            margin: 5px 0;
+            font-size: 14px;
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1), -4px -4px 10px rgba(255, 255, 255, 0.7);
+        }
+
+        button:hover {
+            background-color: #45a049;
+            box-shadow: inset 4px 4px 10px rgba(0, 0, 0, 0.1), inset -4px -4px 10px rgba(255, 255, 255, 0.7);
+        }
+
 	</style>
 </head>
 
@@ -54,6 +75,7 @@
 	</div>
 	<button type="button"
 		th:onclick="|location.href='@{/member-edit/{userNo}(userNo=${member.user_no})}'|">Edit</button>
+	<button onclick="location.href='/'">Home</button>
 	<th:block th:replace="footer :: footer"></th:block>
 </body>
 
