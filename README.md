@@ -68,16 +68,28 @@
 - 짝수 행과 홀수 행에 서로 다른 연두색 배경
 - 수정 및 삭제 버튼을 뉴모피즘 스타일로 디자인
 
-## <span style="color:#32cd32">예시 화면</span>
+## <span style="color:#32cd32">임시 화면</span>
+
+### 회원 목록 페이지
+![Product List](images/login.png)
 
 ### 상품 추가 페이지
-![Add New Product](images/add-new-product.png)
+![Add New Product](images/product-add.png)
 
 ### 상품 수정 페이지
-![Edit Product](images/edit-product.png)
+![Edit Product](images/product-edit.png)
 
 ### 상품 목록 페이지
 ![Product List](images/product-list.png)
+
+### 회원 추가 페이지
+![Add New Product](images/member-add.png)
+
+### 회원 수정 페이지
+![Edit Product](images/member-edit.png)
+
+### 회원 목록 페이지
+![Product List](images/member-list.png)
 
 ## <span style="color:#32cd32">주의 사항</span>
 
