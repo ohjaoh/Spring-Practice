@@ -100,6 +100,30 @@
         form {
             display: inline;
         }
+        
+		.search-container {
+			margin-bottom: 20px;
+		}
+
+		.search-container input[type="text"] {
+			padding: 10px;
+			width: 300px;
+			border-radius: 5px;
+			border: 1px solid #ccc;
+		}
+
+		.search-container button {
+			padding: 10px;
+			border: none;
+			background-color: #4CAF50;
+			color: white;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		.search-container button:hover {
+			background-color: #45a049;
+		}
     </style>
     <script>
         window.onload = function () {
@@ -117,6 +141,11 @@
 <body>
     <th:block th:replace="header :: header"></th:block>
     <h1>Member List</h1>
+    <!-- 검색 기능 추가 -->
+	<div class="search-container">
+		<input type="text" id="search" placeholder="Search by order number, name, or product">
+		<button onclick="searchOrders()">Search</button>
+	</div>
     <table>
         <thead>
             <tr>

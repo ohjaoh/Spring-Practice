@@ -32,7 +32,8 @@
 			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 		}
 
-		th, td {
+		th,
+		td {
 			padding: 10px;
 			text-align: left;
 			border-bottom: 1px solid #ddd;
@@ -99,6 +100,30 @@
 		form {
 			display: inline;
 		}
+
+		.search-container {
+			margin-bottom: 20px;
+		}
+
+		.search-container input[type="text"] {
+			padding: 10px;
+			width: 300px;
+			border-radius: 5px;
+			border: 1px solid #ccc;
+		}
+
+		.search-container button {
+			padding: 10px;
+			border: none;
+			background-color: #4CAF50;
+			color: white;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		.search-container button:hover {
+			background-color: #45a049;
+		}
 	</style>
 	<script>
 		window.onload = function () {
@@ -116,6 +141,11 @@
 <body>
 	<th:block th:replace="~{header :: header}"></th:block>
 	<h1>Custom Order List</h1>
+	<!-- 검색 기능 추가 -->
+	<div class="search-container">
+		<input type="text" id="search" placeholder="Search by order number, name, or product">
+		<button onclick="searchOrders()">Search</button>
+	</div>
 	<table>
 		<thead>
 			<tr>
@@ -141,10 +171,12 @@
 				<td th:text="${order.orderPhoneNumber}">전화번호</td>
 				<td th:text="${order.orderAddress}">주소</td>
 				<td>
-					<button type="button" class="button" th:onclick="'location.href=\'/custom-orders/edit/' + ${order.serial_no} + '\''">수정</button>
+					<button type="button" class="button"
+						th:onclick="'location.href=\'/custom-orders/edit/' + ${order.serial_no} + '\''">수정</button>
 					<form th:action="@{/custom-orders/delete/{id}(id=${order.serial_no})}" method="post">
 						<input type="hidden" name="_method" value="delete" />
-						<button type="submit" class="button delete" onclick="return confirm('정말 이 주문을 삭제하시겠습니까?');">삭제</button>
+						<button type="submit" class="button delete"
+							onclick="return confirm('정말 이 주문을 삭제하시겠습니까?');">삭제</button>
 					</form>
 				</td>
 			</tr>
