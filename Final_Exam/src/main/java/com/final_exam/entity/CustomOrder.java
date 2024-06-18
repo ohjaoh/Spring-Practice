@@ -28,8 +28,8 @@ public class CustomOrder {
 	@JoinColumn(name = "productCode", referencedColumnName = "productCode")
 	private Product product;
 
-	@Column(name = "order_product_code")
-	private String orderProductCode;
+	@Column(name="order_product_code")
+	private int orderProductCode;
 
 	@Column(name = "order_product_name")
 	private String orderProductName;
@@ -76,18 +76,20 @@ public class CustomOrder {
 		this.product = product;
 		if (product != null) {
 			this.orderProductName = product.getProductName(); // 상품명을 받아온다
+			this.orderProductCode = product.getProductCode(); // 상품코드를 받아온다.
 
 		} else {
 			this.orderProductName = null;
+			this.orderProductCode = -1; // 없는 상품이란 의미로 -1
 
 		}
 	}
 
-	public String getOrderProductCode() {
+	public int getOrderProductCode() {
 		return orderProductCode;
 	}
 
-	public void setOrderProductCode(String orderProductCode) {
+	public void setOrderProductCode(int orderProductCode) {
 		this.orderProductCode = orderProductCode;
 	}
 

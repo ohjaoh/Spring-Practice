@@ -71,15 +71,14 @@ public class CustomOrderController {
         } else {
             result.rejectValue("member", "error.customOrder", "Member is required");
         }
-
-        // 상품 정보 설정
-        Product product = productService.findByProductCode(customOrder.getOrderProductCode());
-        if (product != null) {
-            customOrder.setProduct(product);
-            customOrder.setOrderProductName(product.getProductName());
-        } else {
-            result.rejectValue("product", "error.customOrder", "Product is required");
-        }
+        if (result.hasErrors()) {
+			// 유효성 검사 오류 메시지 출력
+			result.getAllErrors()
+					.forEach(error -> System.out.println("Validation error: " + error.getDefaultMessage()));
+			List<Product> products = productService.getAllProducts();
+			model.addAttribute("products", products);
+			return "custom-order-form";
+		}
 
         if (result.hasErrors()) {
             // 유효성 검사 오류 메시지 출력
@@ -159,6 +158,8 @@ public class CustomOrderController {
         if (product != null) {
             customOrder.setProduct(product);
             customOrder.setOrderProductName(product.getProductName());
+            customOrder.setOrderProductCode(product.getProductCode());
+            
         } else {
             result.rejectValue("product", "error.customOrder", "Product is required");
         }
