@@ -115,7 +115,7 @@ public class Member {
 	private String realName; // 실명 필드 추가
 
 	@NotBlank(message = "Password is mandatory")
-	@Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$", message = "비밀번호는 6자리 이상이어야 하며, 숫자와 영문자를 포함해야 합니다.")
+	@Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d`~!@#$%^&*()-_=+]{6,}$", message = "비밀번호는 6자리 이상이어야 하며, 숫자와 영문자를 포함해야 합니다.\n 특수문자는 키보드의 `부터=까지의 것으로 가능합니다.")
 	private String password; // 비밀번호
 
 	@NotBlank(message = "Address is mandatory")
