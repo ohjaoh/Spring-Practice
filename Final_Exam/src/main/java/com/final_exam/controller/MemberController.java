@@ -163,4 +163,13 @@ public class MemberController {
 		session.setAttribute("memberDeleted", true);
 		response.sendRedirect("/member-list");
 	}
+	
+	//회원을 검색합니다.
+	@GetMapping("/search")
+    public String searchMembers(@RequestParam("keyword") String keyword, Model model) {
+        List<Member> members = memberService.searchMembers(keyword);
+        model.addAttribute("members", members);
+        return "member-list";
+    }
+	
 }

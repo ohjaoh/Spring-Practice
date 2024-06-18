@@ -66,4 +66,9 @@ public class MemberService {
     public boolean isIdTaken(String id) {
         return memberRepository.existsById(id);
     }
+    
+    // 검색 메서드
+    public List<Member> searchMembers(String keyword) {
+        return memberRepository.searchByKeyword(keyword);
+    }
 }

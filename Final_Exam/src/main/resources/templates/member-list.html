@@ -101,79 +101,74 @@
             display: inline;
         }
         
-		.search-container {
-			margin-bottom: 20px;
-		}
+        .search-container {
+            margin-bottom: 20px;
+        }
 
-		.search-container input[type="text"] {
-			padding: 10px;
-			width: 300px;
-			border-radius: 5px;
-			border: 1px solid #ccc;
-		}
+        .search-container input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
 
-		.search-container button {
-			padding: 10px;
-			border: none;
-			background-color: #4CAF50;
-			color: white;
-			border-radius: 5px;
-			cursor: pointer;
-		}
+        .search-container button {
+            padding: 10px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
-		.search-container button:hover {
-			background-color: #45a049;
-		}
+        .search-container button:hover {
+            background-color: #45a049;
+        }
     </style>
     <script>
-        window.onload = function () {
-            if (typeof history.pushState === "function") {
-                history.pushState(null, null, document.URL);
-                window.addEventListener('popstate', function (event) {
-                    history.pushState(null, null, document.URL);
-                    alert("You cannot go back to the previous page.");
-                });
-            }
-        };
+        function searchOrders() {
+            const keyword = document.getElementById('search').value;
+            window.location.href = `/search?keyword=${keyword}`;
+        }
     </script>
 </head>
 
 <body>
     <th:block th:replace="header :: header"></th:block>
-    <h1>Member List</h1>
+    <h1>회원 목록</h1>
     <!-- 검색 기능 추가 -->
-	<div class="search-container">
-		<input type="text" id="search" placeholder="Search by order number, name, or product">
-		<button onclick="searchOrders()">Search</button>
-	</div>
+    <div class="search-container">
+        <input type="text" id="search" placeholder="이름, 이메일, 전화번호로 검색">
+        <button onclick="searchOrders()">검색</button>
+    </div>
     <table>
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Real Name</th>
-                <th>Email</th>
-                <th>Phone Number</th>
-                <th>Actions</th>
+                <th>이름</th>
+                <th>이메일</th>
+                <th>전화번호</th>
+                <th>액션</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="member : ${members}">
-                <td th:text="${member.id}">ID</td>
-                <td th:text="${member.realName}">Real Name</td>
-                <td th:text="${member.email}">Email</td>
-                <td th:text="${member.phoneNumber}">Phone Number</td>
+                <td th:text="${member.user_no}">ID</td>
+                <td th:text="${member.realName}">이름</td>
+                <td th:text="${member.email}">이메일</td>
+                <td th:text="${member.phoneNumber}">전화번호</td>
                 <td>
-                    <button type="button" th:onclick="|location.href='@{/member-edit/{userNo}(userNo=${member.user_no})}'|">Edit</button>
+                    <button type="button" th:onclick="|location.href='@{/member-edit/{userNo}(userNo=${member.user_no})}'|">수정</button>
                     <form th:action="@{/members/{userNo}(userNo=${member.user_no})}" method="post" style="display:inline;">
                         <input type="hidden" name="_method" value="delete" />
-                        <button type="submit" class="button delete" onclick="return confirm('Are you sure you want to delete this member?');">Delete</button>
+                        <button type="submit" class="button delete" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</button>
                     </form>
                 </td>
             </tr>
         </tbody>
     </table>
-        <a href="/member-form" class="button">Add New Member</a>
-    <button onclick="location.href='/'">Home</button>
+    <a href="/member-form" class="button">새 회원 추가</a>
+    <button onclick="location.href='/'">홈</button>
     <th:block th:replace="footer :: footer"></th:block>
 </body>
 
