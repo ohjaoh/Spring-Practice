@@ -45,25 +45,32 @@
 		}
 	</style>
 	<script>
-		// 브라우저 캐시를 비우는 JavaScript 코드
-		window.onload = function () {
-			if ('caches' in window) {
-				caches.keys().then(function (cacheNames) {
-					cacheNames.forEach(function (cacheName) {
-						caches.delete(cacheName);
-					});
-				});
-			}
-			// 뒤로 가기 버튼 무효화
-			window.history.pushState(null, null, window.location.href);
-			window.onpopstate = function () {
-				window.history.go(1);
-			};
-		};
-	</script>
-	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-	<meta http-equiv="Pragma" content="no-cache">
-	<meta http-equiv="Expires" content="0">
+        // 브라우저 캐시를 비우고, 뒤로 가기 버튼을 무효화하며, 페이지 로드 시 히스토리 스택을 조작하는 JavaScript 코드
+        window.onload = function () {
+            // 브라우저 캐시를 비움
+            if ('caches' in window) {
+                caches.keys().then(function (cacheNames) {
+                    cacheNames.forEach(function (cacheName) {
+                        caches.delete(cacheName);
+                    });
+                });
+            }
+
+            // 뒤로 가기 버튼 무효화
+            window.history.pushState(null, null, window.location.href);
+            window.onpopstate = function () {
+                window.history.go(1);
+            };
+
+            // 페이지 로드 시 히스토리 스택을 조작
+            history.pushState(null, document.title, location.href);
+            window.addEventListener('popstate', function (event) {
+                // 뒤로 가기 버튼을 눌렀을 때 홈 페이지로 리디렉션
+                history.pushState(null, document.title, location.href);
+                location.replace('/');  // 홈 페이지 경로로 변경
+            });
+        };
+    </script>
 </head>
 
 <body>
