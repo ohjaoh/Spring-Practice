@@ -20,7 +20,15 @@ public class LoginController {
     private MemberService memberService;
 
     @GetMapping("/login")
-    public String loginForm(Model model) {
+    public String loginForm(Model model, HttpSession session, HttpServletResponse response) {
+		// 캐시 제어 헤더 설정
+		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+		response.setHeader("Pragma", "no-cache");
+		response.setHeader("Expires", "0");
+    	// 이미 로그인해서 user라는 세션이 있으면 index로 리다이렉션
+    	if(session.getAttribute("user")!=null) {
+            return "redirect:/";
+    	}
         return "login";
     }
 
