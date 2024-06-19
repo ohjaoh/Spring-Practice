@@ -10,33 +10,44 @@ import java.util.List;
 @Service
 public class CustomOrderService {
 
-    @Autowired
-    private CustomOrderRepository customOrderRepository;
+	@Autowired
+	private CustomOrderRepository customOrderRepository;
 
-    public List<CustomOrder> getAllCustomOrders() {
-        return customOrderRepository.findAll();
-    }
+	// 모든 CustomOrder를 조회하는 메서드
+	public List<CustomOrder> getAllCustomOrders() {
+		return customOrderRepository.findAll();
+	}
 
-    public CustomOrder getCustomOrderById(int id) {
-        return customOrderRepository.findById(id).orElse(null);
-    }
+	// ID로 특정 CustomOrder를 조회하는 메서드
+	public CustomOrder getCustomOrderById(int id) {
+		return customOrderRepository.findById(id).orElse(null);
+	}
 
-    public void saveCustomOrder(CustomOrder customOrder) {
-        customOrderRepository.save(customOrder);
-    }
+	// 새로운 CustomOrder를 저장하는 메서드
+	public void saveCustomOrder(CustomOrder customOrder) {
+		customOrderRepository.save(customOrder);
+	}
 
-    public void updateCustomOrder(int id, CustomOrder customOrder) {
-        CustomOrder existingOrder = customOrderRepository.findById(id).orElse(null);
-        if (existingOrder != null) {
-        	existingOrder.setOrderProductName(customOrder.getOrderProductName());;
-            existingOrder.setCustomizationDetails(customOrder.getCustomizationDetails());
-            existingOrder.setDeliveryDate(customOrder.getDeliveryDate());
-            existingOrder.setSpecialInstructions(customOrder.getSpecialInstructions());
-            customOrderRepository.save(existingOrder);
-        }
-    }
+	// 기존 CustomOrder를 업데이트하는 메서드
+	public void updateCustomOrder(int id, CustomOrder customOrder) {
+		CustomOrder existingOrder = customOrderRepository.findById(id).orElse(null);
+		if (existingOrder != null) {
+			// 필요한 필드를 업데이트
+			existingOrder.setOrderProductName(customOrder.getOrderProductName());
+			existingOrder.setCustomizationDetails(customOrder.getCustomizationDetails());
+			existingOrder.setDeliveryDate(customOrder.getDeliveryDate());
+			existingOrder.setSpecialInstructions(customOrder.getSpecialInstructions());
+			customOrderRepository.save(existingOrder); // 업데이트된 엔티티 저장
+		}
+	}
 
-    public void deleteCustomOrder(int id) {
-        customOrderRepository.deleteById(id);
-    }
+	// ID로 특정 CustomOrder를 삭제하는 메서드
+	public void deleteCustomOrder(int id) {
+		customOrderRepository.deleteById(id);
+	}
+
+	// 키워드를 이용해 CustomOrder를 검색하는 메서드
+	public List<CustomOrder> searchMembers(String keyword) {
+		return customOrderRepository.searchByKeyword(keyword);
+	}
 }

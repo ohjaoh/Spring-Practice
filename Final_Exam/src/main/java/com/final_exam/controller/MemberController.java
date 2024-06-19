@@ -165,7 +165,7 @@ public class MemberController {
 	}
 	
 	//회원을 검색합니다.
-	@GetMapping("/search")
+	@GetMapping("/member-search")
     public String searchMembers(@RequestParam("keyword") String keyword, Model model) {
         List<Member> members = memberService.searchMembers(keyword);
         model.addAttribute("members", members);
