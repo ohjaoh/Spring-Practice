@@ -14,8 +14,8 @@ import org.springframework.stereotype.Repository;
 public interface CustomOrderRepository extends JpaRepository<CustomOrder, Integer> {
 	
 
-    // 리스트인 이유 여러회원이 검색될 수 있음 지금은 실명, 이메일주소, 전화번호 등으로 검색이 되는 중인데 나중에 수정해도 됨
-	@Query("SELECT o FROM CustomOrder o WHERE o.orderName LIKE %:keyword% OR o.orderProductCode LIKE %:keyword% OR o.orderPhoneNumber LIKE %:keyword%")
+    // 리스트인 이유 여러주문이 검색될 수 있음 주문자이름, 주문상품명, 주문자전화번호로 검색가능
+	@Query("SELECT o FROM CustomOrder o WHERE o.orderName LIKE %:keyword% OR o.orderProductName LIKE %:keyword% OR o.orderPhoneNumber LIKE %:keyword%")
 	List<CustomOrder> searchByKeyword(@Param("keyword") String keyword);
 
 }

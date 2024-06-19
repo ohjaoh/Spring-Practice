@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.final_exam.entity.CustomOrder;
 import com.final_exam.entity.Member;
@@ -199,5 +200,14 @@ public class CustomOrderController {
         session.setAttribute("customOrderDeleted", true);
         return "redirect:/custom-orders";
     }
-
+	
+    //주문을 검색합니다.
+	@GetMapping("/custom-order-search")
+    public String searchMembers(@RequestParam("keyword") String keyword, Model model) {
+        List<CustomOrder> customOrder = customOrderService.searchCustomOrders(keyword);
+        model.addAttribute("customOrders", customOrder);
+        return "custom-order-list";
+    }
+	
+    
 }

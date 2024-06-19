@@ -135,6 +135,10 @@
 				});
 			}
 		};
+		function searchOrders() {
+            const keyword = document.getElementById('search').value;
+            window.location.href = `/custom-order-search?keyword=${keyword}`;
+        }
 	</script>
 </head>
 
@@ -142,10 +146,10 @@
 	<th:block th:replace="~{header :: header}"></th:block>
 	<h1>Custom Order List</h1>
 	<!-- 검색 기능 추가 -->
-	<div class="search-container">
-		<input type="text" id="search" placeholder="Search by order number, name, or product">
-		<button onclick="searchOrders()">Search</button>
-	</div>
+    <div class="search-container">
+        <input type="text" id="search" placeholder="주문자이름, 주문상품명, 주문자전화번호로 검색">
+        <button onclick="searchOrders()">검색</button>
+    </div>
 	<table>
 		<thead>
 			<tr>

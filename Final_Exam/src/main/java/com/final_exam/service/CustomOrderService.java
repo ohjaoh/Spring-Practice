@@ -47,7 +47,7 @@ public class CustomOrderService {
 	}
 
 	// 키워드를 이용해 CustomOrder를 검색하는 메서드
-	public List<CustomOrder> searchMembers(String keyword) {
+	public List<CustomOrder> searchCustomOrders(String keyword) {
 		return customOrderRepository.searchByKeyword(keyword);
 	}
 }
