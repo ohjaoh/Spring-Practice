@@ -92,7 +92,7 @@ public class MemberController {
 	@GetMapping("/member-list")
 	public String viewMemberList(Model model, HttpSession session) {
 		// 세션에서 "user" 속성을 확인합니다. 여기를 관리자로 변경해야함
-		if (session.getAttribute("user") == null) {
+		if (session.getAttribute("admin") == null) {
 			// "user"가 없으면 index.html로 리다이렉트합니다.
 			return "redirect:/";
 		}
@@ -106,7 +106,7 @@ public class MemberController {
 	@GetMapping("/member-edit/{userNo}")
 	public String showEditMemberForm(@PathVariable("userNo") int userNo, Model model, HttpSession session) {
 		Member member = memberService.getMemberByUserNo(userNo);
-		if (session.getAttribute("user") == null) {
+		if (session.getAttribute("user") == null && session.getAttribute("admin") == null) {
 			return "redirect:/";
 		}
 
@@ -148,7 +148,12 @@ public class MemberController {
 	        session.setAttribute("memberUpdated", true);
 	        session.removeAttribute("visitedEditForm");
 
-	        return "redirect:/my-page";
+	        if(session.getAttribute("user") != null) {
+	        	return "redirect:/my-page";
+	        }
+	        else if(session.getAttribute("admin") != null) {
+	        	return "redirect:/member-list";
+	        }
 	    }
 
 	    return "redirect:/";

@@ -1,7 +1,6 @@
 package com.final_exam.repository;
 
 import com.final_exam.entity.CustomOrder;
-import com.final_exam.entity.Member;
 
 import java.util.List;
 

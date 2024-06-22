@@ -144,6 +144,11 @@
 				element.textContent = cost.toFixed(0) + ' 원';
 			});
 		};
+		
+		function searchOrders() {
+		    const keyword = document.getElementById('search').value;
+		    window.location.href = `/product-search?keyword=${keyword}`;
+		}
 	</script>
 </head>
 
@@ -152,7 +157,7 @@
 	<h1>Product List</h1>
 	<!-- 검색 기능 추가 -->
 	<div class="search-container">
-		<input type="text" id="search" placeholder="Search by order number, name, or product">
+		<input type="text" id="search" placeholder="상품코드, 상품이름으로 검색">
 		<button onclick="searchOrders()">Search</button>
 	</div>
 	<table>
@@ -177,7 +182,7 @@
 				<td th:text="${product.SalesRate}">상품총판매수량</td>
 				<td>
 					<!-- 밑에 관리자라면 수정/삭제 보이게 만들면 될듯 일단 지금은 유저로그인도 보는 상태 -->
-					<th:block th:if="${session.user != null}">
+					<th:block th:if="${session.admin != null}">
 						<button type="button" class="button"
 							th:onclick="'location.href=\'/product-edit/' + ${product.productCode} + '\''">수정</button>
 						<form th:action="@{/products/{id}(id=${product.productCode})}" method="post">

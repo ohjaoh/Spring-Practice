@@ -33,4 +33,22 @@ public class ProductService {
     public Product findByProductCode(int productCode) {
         return productRepository.findById(productCode).orElse(null);
     }
+    
+    // 검색 메서드
+    public List<Product> searchProducts(String keyword) {
+        Integer keywordInt = null;
+        String keywordForSearch = null;
+
+        try {
+            keywordInt = Integer.parseInt(keyword);
+        } catch (NumberFormatException e) {
+            // keyword가 숫자가 아닌 경우 와일드카드 포함하여 검색어 설정
+            keywordForSearch = "%" + keyword + "%";
+        }
+
+        // 숫자인 경우 null로 설정하고, 그렇지 않은 경우 와일드카드 포함된 keywordForSearch 사용
+        return productRepository.searchByKeyword(keywordForSearch, keywordInt);
+    }
+
+
 }

@@ -77,20 +77,22 @@
 	<th:block th:replace="header :: header"></th:block>
 	<h1>장인공방에 오신것을 환영합니다.</h1>
 	<p>석재 밑에 세션으로 로그인해야 볼 수 있게 해둔 관리부분들을 관리자가 로그인 했을 때 가능하게 하면 될듯</p>
-	<th:block th:if="${session.user != null}">
+	<th:block th:if="${session.admin != null}">
 
 		<a href="/product-list" class="button">상품관리</a>
 		<a href="/custom-orders" class="button">주문관리</a>
 		<a href="/member-list" class="button">회원관리</a>
+		<a href="/admin-list" class="button">관리자관리</a>
+		<a href="/adminLogout" class="button">logout</a>
 	</th:block>
 
 
-	<th:block th:if="${session.user == null}">
+	<th:block th:if="${session.user == null && session.admin == null}">
 		<button class="button" onclick="location.href='/login'">회원로그인</button>
 	</th:block>
 	<!--여기서 관리자로그인-->
-	<th:block th:if="${session.user == null}">
-		<button class="button" onclick="">관리자로그인</button>
+	<th:block th:if="${session.user == null && session.admin == null}">
+		<button class="button" onclick="location.href='/adminLogin'">관리자로그인</button>
 	</th:block>
 
 	<th:block th:if="${session.user != null}">
