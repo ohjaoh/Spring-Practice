@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.final_exam.entity.Product;
@@ -43,7 +44,7 @@ public class ProductController {
 	@GetMapping("/product-management")
 	public String viewProductManagementPage(HttpSession session) {
 		// 세션에서 "user" 속성을 확인합니다. 여기를 관리자로 변경해야함
-        if (session.getAttribute("user") == null) {
+        if (session.getAttribute("admin") == null) {
             // "user"가 없으면 index.html로 리다이렉트합니다.
             return "redirect:/";
         }
@@ -54,7 +55,7 @@ public class ProductController {
 	@GetMapping("/product-form")
 	public String showProductForm(Model model, HttpSession session) {
 		// 세션에서 "user" 속성을 확인합니다. 여기를 관리자로 변경해야함
-        if (session.getAttribute("user") == null) {
+        if (session.getAttribute("admin") == null) {
             // "user"가 없으면 index.html로 리다이렉트합니다.
             return "redirect:/";
         }
@@ -80,7 +81,7 @@ public class ProductController {
 	@GetMapping("/product-list")
 	public String viewProductList(Model model, HttpSession session) {
 		// 세션에서 "user" 속성을 확인합니다. 여기를 관리자로 변경해야함
-        if (session.getAttribute("user") == null) {
+        if (session.getAttribute("admin") == null) {
             // "user"가 없으면 index.html로 리다이렉트합니다.
             return "redirect:/";
         }
@@ -94,7 +95,7 @@ public class ProductController {
 	@GetMapping("/product-edit/{id}")
 	public String showEditProductForm(@PathVariable("id") int id, Model model, HttpSession session) {
 		// 세션에서 "user" 속성을 확인합니다. 여기를 관리자로 변경해야함
-        if (session.getAttribute("user") == null) {
+        if (session.getAttribute("admin") == null) {
             // "user"가 없으면 index.html로 리다이렉트합니다.
             return "redirect:/";
         }
@@ -173,6 +174,14 @@ public class ProductController {
         Product product = productService.findByProductCode(code);
         model.addAttribute("product", product);
         return "user-product-detail";
+    }
+    
+	//상품을 검색합니다.
+	@GetMapping("/product-search")
+    public String searchProducts(@RequestParam("keyword") String keyword, Model model) {
+        List<Product> products = productService.searchProducts(keyword);
+        model.addAttribute("products", products);
+        return "product-list";
     }
 	
 	

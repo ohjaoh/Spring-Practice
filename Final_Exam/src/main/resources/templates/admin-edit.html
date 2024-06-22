@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Edit Admin</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			min-height: 100vh;
+			margin: 0;
+			background: linear-gradient(135deg, #f0fff0, #c9fdd7);
+			padding: 20px;
+		}
+
+		h2 {
+			margin-bottom: 20px;
+			color: #32cd32;
+			text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+		}
+
+		form {
+			width: 80%;
+			background: rgba(255, 255, 255, 0.8);
+			backdrop-filter: blur(10px);
+			border-radius: 10px;
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+			padding: 20px;
+		}
+
+		.form-group {
+			margin-bottom: 15px;
+		}
+
+		label {
+			display: block;
+			margin-bottom: 5px;
+			font-weight: bold;
+		}
+
+		input[type="text"],
+		input[type="password"],
+		input[type="email"],
+		input[type="date"],
+		input[type="number"] {
+			width: calc(100% - 22px);
+			padding: 10px;
+			border: 1px solid #ddd;
+			border-radius: 5px;
+			box-sizing: border-box;
+		}
+
+		.readonly {
+			background-color: #f0f0f0;
+		}
+
+		.button {
+			padding: 10px 20px;
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			border-radius: 10px;
+			cursor: pointer;
+			transition: background-color 0.3s, box-shadow 0.3s;
+			text-decoration: none;
+			display: inline-block;
+			margin: 5px 0;
+			font-size: 14px;
+			box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1), -4px -4px 10px rgba(255, 255, 255, 0.7);
+		}
+
+		.button:hover {
+			background-color: #45a049;
+			box-shadow: inset 4px 4px 10px rgba(0, 0, 0, 0.1), inset -4px -4px 10px rgba(255, 255, 255, 0.7);
+		}
+
+		.button.cancel {
+			background-color: #f44336;
+		}
+
+		.button.cancel:hover {
+			background-color: #e53935;
+		}
+	</style>
+</head>
+
+<body>
+	<h2>Edit Admin</h2>
+	<form th:action="@{/admins/{adminNo}(adminNo=${admin.adminNo})}" th:object="${admin}" method="post">
+		<input type="hidden" name="_method" value="put" />
+		<div class="form-group">
+			<label for="adminId">ID:</label>
+			<input type="text" id="adminId" th:field="*{adminId}" class="readonly" readonly />
+		</div>
+		<div class="form-group">
+			<label for="adminName">Name:</label>
+			<input type="text" id="adminName" th:field="*{adminName}" required />
+			<div th:if="${#fields.hasErrors('adminName')}">
+				<p th:errors="*{adminName}">Name Error</p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="adminPassword">Password:</label>
+			<input type="password" id="adminPassword" th:field="*{adminPassword}" required />
+			<div th:if="${#fields.hasErrors('adminPassword')}">
+				<p th:errors="*{adminPassword}">Password Error</p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="adminPosition">Position:</label>
+			<input type="text" id="adminPosition" th:field="*{adminPosition}" required />
+			<div th:if="${#fields.hasErrors('adminPosition')}">
+				<p th:errors="*{adminPosition}">Position Error</p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="adminPhoneNumber">Phone Number:</label>
+			<input type="text" id="adminPhoneNumber" th:field="*{adminPhoneNumber}" required />
+			<div th:if="${#fields.hasErrors('adminPhoneNumber')}">
+				<p th:errors="*{adminPhoneNumber}">Phone Number Error</p>
+			</div>
+		</div>
+		<button type="submit" class="button">Update</button>
+		<button type="button" class="button cancel" th:onclick="|location.href='@{/admin-list}'|">Cancel</button>
+	</form>
+</body>
+</html>

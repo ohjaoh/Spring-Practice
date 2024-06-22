@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Admin List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #f0fff0, #c9fdd7);
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #32cd32;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: rgba(240, 255, 240, 0.8);
+        }
+
+        tr:nth-child(odd) {
+            background-color: rgba(230, 255, 230, 0.8);
+        }
+
+        .button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            margin: 5px 0;
+            font-size: 14px;
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1), -4px -4px 10px rgba(255, 255, 255, 0.7);
+        }
+
+        .button:hover {
+            background-color: #45a049;
+            box-shadow: inset 4px 4px 10px rgba(0, 0, 0, 0.1), inset -4px -4px 10px rgba(255, 255, 255, 0.7);
+        }
+
+        .button.delete {
+            background-color: #f44336;
+        }
+
+        .button.delete:hover {
+            background-color: #e53935;
+        }
+
+        button {
+            width: auto;
+            align-self: center;
+            padding: 10px 20px;
+            background-color: #3cb371;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1), -4px -4px 10px rgba(255, 255, 255, 0.7);
+        }
+
+        button:hover {
+            background-color: #2e8b57;
+        }
+
+        form {
+            display: inline;
+        }
+        
+        .search-container {
+            margin-bottom: 20px;
+        }
+
+        .search-container input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .search-container button {
+            padding: 10px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .search-container button:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <script>
+        function searchOrders() {
+            const keyword = document.getElementById('search').value;
+            window.location.href = `/admin-search?keyword=${keyword}`;
+        }
+    </script>
+</head>
+
+<body>
+    <th:block th:replace="header :: header"></th:block>
+    <h1>관리자 목록</h1>
+    <!-- 검색 기능 추가 -->
+    <div class="search-container">
+        <input type="text" id="search" placeholder="이름, 직책, 전화번호로 검색">
+        <button onclick="searchOrders()">검색</button>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>이름</th>
+                <th>직책</th>
+                <th>전화번호</th>
+                <th>액션</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="admin : ${admins}">
+                <td th:text="${admin.adminNo}">ID</td>
+                <td th:text="${admin.adminName}">이름</td>
+                <td th:text="${admin.adminPosition}">직책</td>
+                <td th:text="${admin.adminPhoneNumber}">전화번호</td>
+                <td>
+                    <button type="button" th:onclick="|location.href='@{/admin-edit/{adminNo}(adminNo=${admin.adminNo})}'|">수정</button>
+                    <form th:action="@{/admins/{adminNo}(adminNo=${admin.adminNo})}" method="post" style="display:inline;">
+                        <input type="hidden" name="_method" value="delete" />
+                        <button type="submit" class="button delete" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="/admin-form" class="button">새 관리자 추가</a>
+    <button onclick="location.href='/'">홈</button>
+    <th:block th:replace="footer :: footer"></th:block>
+</body>
+
+</html>

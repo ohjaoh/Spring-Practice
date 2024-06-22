@@ -106,14 +106,14 @@ public class CustomOrderController {
         System.out.println("Custom order saved with product code: " + customOrder.getOrderProductCode());
         session.setAttribute("customOrderSaved", true);
         session.removeAttribute("visitedCustomOrderForm");
-        return "redirect:/custom-orders";
+        return "redirect:/";
     }
 
     // 맞춤 주문 목록 페이지로 이동
     @GetMapping("/custom-orders")
     public String viewCustomOrderList(Model model , HttpSession session) {
         // 세션에서 "user" 속성을 확인합니다. 여기를 관리자로 변경해야함
-        if (session.getAttribute("user") == null) {
+        if (session.getAttribute("admin") == null) {
             // "user"가 없으면 index.html로 리다이렉트합니다.
             return "redirect:/";
         }
@@ -127,7 +127,7 @@ public class CustomOrderController {
     @GetMapping("/custom-orders/edit/{id}")
     public String showEditCustomOrderForm(@PathVariable("id") int id, Model model, HttpSession session) {
         // 세션에서 "user" 속성을 확인합니다. 여기를 관리자로 변경해야함
-        if (session.getAttribute("user") == null) {
+        if (session.getAttribute("admin") == null) {
             // "user"가 없으면 index.html로 리다이렉트합니다.
             return "redirect:/";
         }
