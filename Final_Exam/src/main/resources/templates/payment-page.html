@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>결제 페이지</title>
+    <script src="https://js.bootpay.co.kr/bootpay-4.3.4.min.js" type="application/javascript"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #f0fff0, #c9fdd7);
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #32cd32;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #32cd32;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2e8b57;
+        }
+    </style>
+</head>
+<body>
+    <h1>결제 페이지</h1>
+    <button type="button" onclick="requestPay()">결제</button>
+
+    <!-- 서버에서 전달된 productCost 값을 설정 -->
+    <div id="product-cost" th:text="${productCost}" style="display:none;"></div>
+
+    <script>
+        async function requestPay() {
+            // 서버에서 전달된 productCost 값을 JavaScript로 읽어옴
+            var productCostElement = document.getElementById("product-cost");
+            var productCost = productCostElement.textContent || productCostElement.innerText;
+
+            console.log("Product Cost: " + productCost);
+
+            try {
+                const response = await Bootpay.requestPayment({
+                    "application_id": "6676bcca9d67b097451b0263",
+                    "price": productCost,
+                    "order_name": "유한대학교 스프링 프로젝트",
+                    "order_id": "TEST_ORDER_ID"
+                });
+
+                switch (response.event) {
+                    case 'done':
+                        console.log(response);
+                        await fetch('/custom-orders/complete', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(response)
+                        });
+
+                        alert("결제가 완료되었습니다!");
+                        break;
+                    case 'issued':
+                        // 가상계좌 입금 완료 처리
+                        break;
+                    case 'confirm':
+                        console.log(response.receipt_id);
+                        const confirmedData = await Bootpay.confirm();
+                        if (confirmedData.event === 'done') {
+                            // 결제 성공
+                        }
+                        break;
+                }
+            } catch (e) {
+                console.log(e.message);
+                switch (e.event) {
+                    case 'cancel':
+                        // 사용자가 결제창을 닫을 때 호출
+                        console.log(e.message);
+                        break;
+                    case 'error':
+                        // 결제 승인 중 오류 발생 시 호출
+                        console.log(e.error_code);
+                        alert("결제 실패: " + e.message);
+                        break;
+                }
+            }
+        }
+    </script>
+</body>
+</html>

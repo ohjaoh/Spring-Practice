@@ -2,7 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Custom Order Form</title>
-    <script src="https://js.bootpay.co.kr/bootpay-4.3.4.min.js" type="application/javascript"></script>
     <style>
         body {
             display: flex;
@@ -60,10 +59,10 @@
 <body>
     <h1>맞춤 주문 폼</h1>
 
-    <form id="orderForm" th:action="@{/custom-orders}" th:object="${customOrder}" method="post">
+    <form th:action="@{/custom-orders}" th:object="${customOrder}" method="post">
         <div class="form-group">
             <label for="product">상품명</label>
-            <select id="product" th:field="*{product}" onchange="updateProductCost(this)">
+            <select id="product" th:field="*{product}">
                 <option th:each="product : ${products}" th:value="${product.productCode}" th:data-cost="${product.productCost}" th:text="${product.productName}">상품명</option>
             </select>
             <div class="error" th:if="${#fields.hasErrors('product')}" th:errors="*{product}"></div>
@@ -102,77 +101,7 @@
             <span th:text="${customOrder.member.address}"></span>
         </div>
 
-        <input type="hidden" id="productCost"/>
-        <button type="button" onclick="requestPay()">결제</button>
+        <button type="submit">다음</button>
     </form>
-
-    <script>
-		document.addEventListener("DOMContentLoaded", function() {
-		    // 초기 선택된 상품의 productCost 설정
-		    const selectElement = document.getElementById('product');
-		    updateProductCost(selectElement);
-		});
-		
-        function updateProductCost(selectElement) {
-            const selectedProduct = selectElement.options[selectElement.selectedIndex];
-			const productCost = selectedProduct.dataset.cost;
-            document.getElementById('productCost').value = productCost;
-			console.log(productCost);
-        }
-
-		async function requestPay() {
-		           const productCost = document.getElementById('productCost').value;
-		           const productCode = document.getElementById('product').value;
-
-		           try {
-		               const response = await Bootpay.requestPayment({
-		                   "application_id": "6676bcca9d67b097451b0263",
-		                   "price": productCost,
-		                   "order_name": "유한대학교 스프링 프로젝트",
-		                   "order_id": "TEST_ORDER_ID"
-		               });
-
-		               switch (response.event) {
-		                   case 'done':
-		                       console.log(response);
-		                       await fetch('/payment-confirm', {
-		                           method: 'POST',
-		                           headers: {
-		                               'Content-Type': 'application/json'
-		                           },
-		                           body: JSON.stringify(response)
-		                       });
-
-		                       // 폼 제출
-							   alert("결제가 완료되었습니다!");
-		                       document.getElementById("orderForm").submit();
-		                       break;
-		                   case 'issued':
-		                       // 가상계좌 입금 완료 처리
-		                       break;
-		                   case 'confirm':
-		                       console.log(response.receipt_id);
-		                       const confirmedData = await Bootpay.confirm();
-		                       if (confirmedData.event === 'done') {
-		                           // 결제 성공
-		                       }
-		                       break;
-		               }
-		           } catch (e) {
-		               console.log(e.message);
-		               switch (e.event) {
-		                   case 'cancel':
-		                       // 사용자가 결제창을 닫을 때 호출
-		                       console.log(e.message);
-		                       break;
-		                   case 'error':
-		                       // 결제 승인 중 오류 발생 시 호출
-		                       console.log(e.error_code);
-		                       alert("결제 실패: " + e.message);
-		                       break;
-		               }
-		           }
-		       }
-    </script>
 </body>
 </html>
