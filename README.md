@@ -8,6 +8,7 @@
 - **상품 관리**: 상품 추가, 수정, 조회, 삭제
 - **고객 관리**: 고객 정보 추가, 수정, 조회, 삭제
 - **주문 관리**: 주문 생성, 수정, 조회, 삭제
+- **관리자 관리**: 관리자 생성, 수정, 조회, 삭제
 
 ## 기술 스택
 
@@ -54,14 +55,62 @@
 
 ### 주요 페이지
 
-**상품 추가 페이지**  
-![상품 추가 페이지](images/product_add.png)
+### 회원가입 페이지
+![Add New Product](images/member-add.png)
 
-**고객 추가 페이지**  
-![고객 추가 페이지](images/customer_add.png)
+### 로그인 페이지
+![Product List](images/login.png)
 
-**주문 추가 페이지**  
-![주문 추가 페이지](images/order_add.png)
+### index 페이지
+![Product List](images/index.png)
+
+### 회원 상품 목록 페이지
+![Product List](images/user-product-list.png)
+
+### 상품상세 페이지
+![Product List](images/product-detail.png)
+
+### 마이 페이지
+![Product List](images/my-page.png)
+
+### 관리자 로그인 페이지
+![Product List](images/admin-login.png)
+
+### 관리자 index 페이지
+![Product List](images/admin-index.png)
+
+### 상품 목록 페이지
+![Product List](images/product-list.png)
+
+### 주문 목록 페이지
+![Product List](images/customorder-list.png)
+
+### 회원 목록 페이지
+![Product List](images/member-list.png)
+
+### 관리자 목록 페이지
+![Product List](images/admin-list.png)
+
+### 상품 추가 페이지
+![Add New Product](images/product-add.png)
+
+### 상품 수정 페이지
+![Edit Product](images/product-edit.png)
+
+### 주문 수정 페이지
+![Product List](images/custom-edit.png)
+
+### 회원 추가 페이지
+![Add New Product](images/member-add.png)
+
+### 회원 수정 페이지
+![Edit Product](images/member-edit.png)
+
+### 관리자 추가 페이지
+![Product List](images/admin-add.png)
+
+### 관리자 수정 페이지
+![Product List](images/admin-edit.png)
 
 ## 주의 사항
 
