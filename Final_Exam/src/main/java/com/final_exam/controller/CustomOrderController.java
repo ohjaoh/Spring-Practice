@@ -144,16 +144,7 @@ public class CustomOrderController {
     public String editCustomOrder(@PathVariable("id") int id,
             @Valid @ModelAttribute("customOrder") CustomOrder customOrder, BindingResult result, Model model,
             HttpSession session) {
-        // 회원 정보 설정
-        LoginController.User user = (LoginController.User) session.getAttribute("user");
-        if (user != null) {
-            Member member = memberService.findById(user.getId());
-            customOrder.setMember(member);
-            System.out.println("Member set with ID: " + member.getId() + ", RealName: " + member.getRealName()); // 디버깅로그출력
-        } else {
-            result.rejectValue("member", "error.customOrder", "Member is required");
-        }
-
+    	System.out.println("주문수정처리진입");
         // 상품 정보 설정
         Product product = productService.findByProductCode(customOrder.getOrderProductCode());
         if (product != null) {
