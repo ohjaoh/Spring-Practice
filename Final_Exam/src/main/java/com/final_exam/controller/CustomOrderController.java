@@ -108,10 +108,19 @@ public class CustomOrderController {
 			return "redirect:/custom-orders/new";
 		}
 		System.out.println("저장됨?" + customOrder.getSerial_no());
+		
+	    // 제품의 sales_rate 증가
+	    Product product = customOrder.getProduct();
+	    if (product != null) {
+	        product.setSalesRate(product.getSalesRate() + 1);
+	        productService.saveProduct(product);  // productService를 통해 제품 정보 저장
+	    }
+		
 		customOrderService.saveCustomOrder(customOrder);
+
 		session.removeAttribute("customOrder");
 		session.removeAttribute("productCost");
-		return "index";
+		return "redirect:/";
 	}
 
 	// 맞춤 주문 목록 페이지로 이동
