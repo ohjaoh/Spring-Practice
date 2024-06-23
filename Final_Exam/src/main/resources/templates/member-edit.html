@@ -147,13 +147,6 @@
 					<p th:errors="*{points}">Points Error</p>
 				</div>
 			</div>
-			<div class="form-group">
-				<label for="totalPaymentAmount">Total Payment Amount:</label>
-				<input type="number" step="0.01" id="totalPaymentAmount" th:field="*{totalPaymentAmount}" required />
-				<div th:if="${#fields.hasErrors('totalPaymentAmount')}">
-					<p th:errors="*{totalPaymentAmount}">Total Payment Amount Error</p>
-				</div>
-			</div>
 		</div>
 		<div th:unless="${session.admin}">
 			<div class="form-group">
