@@ -39,5 +39,54 @@ public class Admin {
     @NotBlank(message = "전화번호가 비었습니다.")
     @Pattern(regexp = "^\\d{2,3}-\\d{3,4}-\\d{4}$", message = "전화번호 형식이 올바르지 않습니다.")
     private String adminPhoneNumber; // 관리자 전화번호
+
+	public int getAdminNo() {
+		return adminNo;
+	}
+
+	public void setAdminNo(int adminNo) {
+		this.adminNo = adminNo;
+	}
+
+	public String getAdminId() {
+		return adminId;
+	}
+
+	public void setAdminId(String adminId) {
+		this.adminId = adminId;
+	}
+
+	public String getAdminPassword() {
+		return adminPassword;
+	}
+
+	public void setAdminPassword(String adminPassword) {
+		this.adminPassword = adminPassword;
+	}
+
+	public String getAdminName() {
+		return adminName;
+	}
+
+	public void setAdminName(String adminName) {
+		this.adminName = adminName;
+	}
+
+	public String getAdminPosition() {
+		return adminPosition;
+	}
+
+	public void setAdminPosition(String adminPosition) {
+		this.adminPosition = adminPosition;
+	}
+
+	public String getAdminPhoneNumber() {
+		return adminPhoneNumber;
+	}
+
+	public void setAdminPhoneNumber(String adminPhoneNumber) {
+		this.adminPhoneNumber = adminPhoneNumber;
+	}
+    
 }
 

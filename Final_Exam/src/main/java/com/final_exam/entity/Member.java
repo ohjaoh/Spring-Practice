@@ -95,14 +95,6 @@ public class Member {
 		this.points = points;
 	}
 
-	public BigDecimal getTotalPaymentAmount() {
-		return totalPaymentAmount;
-	}
-
-	public void setTotalPaymentAmount(BigDecimal totalPaymentAmount) {
-		this.totalPaymentAmount = totalPaymentAmount;
-	}
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int user_no; // 회원 아이디 (기본 키)
@@ -123,7 +115,7 @@ public class Member {
 
 	@NotBlank(message = "Phone number is mandatory")
 	@Pattern(regexp = "^\\d{2,3}-\\d{3,4}-\\d{4}$", message = "전화번호 형식이 올바르지 않습니다.")
-	private String phoneNumber;
+	private String phoneNumber; //전화번호
 
 	@NotBlank(message = "Email is mandatory")
 	@Email(message = "Email should be valid")
@@ -138,6 +130,4 @@ public class Member {
 	@Min(value = 0, message = "Points must be greater than or equal to 0")
 	private int points; // 포인트
 
-	@Min(value = 0, message = "Total payment amount must be greater than or equal to 0")
-	private BigDecimal totalPaymentAmount; // 누적 결제 금액
 }
