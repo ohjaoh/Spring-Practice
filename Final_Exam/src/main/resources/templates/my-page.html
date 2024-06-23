@@ -71,7 +71,6 @@
 		<div class="info">Phone Number: <span th:text="${member.phoneNumber}"></span></div>
 		<div class="info">Birthdate: <span th:text="${member.birthdate}"></span></div>
 		<div class="info">Points: <span th:text="${member.points}"></span></div>
-		<div class="info">Total Payment: <span th:text="${member.totalPaymentAmount}"></span></div>
 	</div>
 	<button type="button"
 		th:onclick="|location.href='@{/member-edit/{userNo}(userNo=${member.user_no})}'|">Edit</button>

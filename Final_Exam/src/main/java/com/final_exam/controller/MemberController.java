@@ -142,8 +142,6 @@ public class MemberController {
 	        member.setEmail(memberDetails.getEmail());
 	        member.setBirthdate(memberDetails.getBirthdate());
 	        member.setPoints(memberDetails.getPoints());
-	        member.setTotalPaymentAmount(memberDetails.getTotalPaymentAmount());
-
 	        memberService.saveMember(member);
 	        session.setAttribute("memberUpdated", true);
 	        session.removeAttribute("visitedEditForm");

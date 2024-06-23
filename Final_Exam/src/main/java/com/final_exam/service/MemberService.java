@@ -21,8 +21,6 @@ public class MemberService {
     public Member registerMember(Member member) {
         // 포인트와 누적 결제 금액의 기본값 설정
         member.setPoints(50);
-        member.setTotalPaymentAmount(BigDecimal.ZERO);
-
         // 비밀번호 해싱
         if (!isPasswordHashed(member.getPassword())) {
             String hashedPassword = HashUtil.hashPassword(member.getPassword());

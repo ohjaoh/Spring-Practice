@@ -160,11 +160,6 @@
 				<label for="points">Points:</label>
 				<input type="number" id="points" th:field="*{points}" class="readonly" readonly />
 			</div>
-			<div class="form-group">
-				<label for="totalPaymentAmount">Total Payment Amount:</label>
-				<input type="number" step="0.01" id="totalPaymentAmount" th:field="*{totalPaymentAmount}"
-					class="readonly" readonly />
-			</div>
 		</div>
 		<button type="submit" class="button">Update</button>
 		<button type="button" class="button cancel" th:onclick="|location.href='@{/member-list}'|">Cancel</button>
