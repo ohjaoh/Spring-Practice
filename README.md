@@ -98,7 +98,7 @@
 ![Edit Product](images/product-edit.png)
 
 ### 주문 수정 페이지
-![Product List](images/custom-edit.png)
+![Product List](images/customorder-edit.png)
 
 ### 회원 추가 페이지
 ![Add New Product](images/member-add.png)
