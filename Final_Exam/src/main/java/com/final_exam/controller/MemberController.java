@@ -38,12 +38,6 @@ public class MemberController {
 		response.setDateHeader("Expires", 0);
 	}
 
-	// 회원 관리 페이지를 반환합니다.
-	@GetMapping("/member-management")
-	public String viewMemberManagementPage() {
-		return "member-management";
-	}
-
 	// 회원 입력 폼을 보여줍니다.
 	@GetMapping("/member-form")
 	public String showMemberForm(Model model, HttpSession session) {

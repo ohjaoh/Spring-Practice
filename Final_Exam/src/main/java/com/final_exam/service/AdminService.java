@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.final_exam.controller.HashUtil;
 import com.final_exam.entity.Admin;
-import com.final_exam.entity.Member;
 import com.final_exam.repository.AdminRepository;
 
 @Service

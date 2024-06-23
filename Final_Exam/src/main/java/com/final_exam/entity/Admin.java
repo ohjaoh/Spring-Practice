@@ -15,7 +15,6 @@ import lombok.Data;
 @Data
 public class Admin {
 	
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int adminNo; // 관리자 번호 (기본 키, 자동 증가)

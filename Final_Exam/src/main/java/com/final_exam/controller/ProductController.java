@@ -40,17 +40,6 @@ public class ProductController {
 		response.setDateHeader("Expires", 0);
 	}
 
-	// 제품 관리 페이지를 반환합니다.
-	@GetMapping("/product-management")
-	public String viewProductManagementPage(HttpSession session) {
-		// 세션에서 "user" 속성을 확인합니다. 여기를 관리자로 변경해야함
-        if (session.getAttribute("admin") == null) {
-            // "user"가 없으면 index.html로 리다이렉트합니다.
-            return "redirect:/";
-        }
-		return "product-management";
-	}
-
 	// 제품 입력 폼을 보여줍니다.
 	@GetMapping("/product-form")
 	public String showProductForm(Model model, HttpSession session) {
