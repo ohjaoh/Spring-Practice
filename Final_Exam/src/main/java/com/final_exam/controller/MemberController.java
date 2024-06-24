@@ -114,7 +114,6 @@ public class MemberController {
 	}
 
 	// 회원 정보를 업데이트합니다.
-	// 회원 정보를 업데이트합니다.
 	@PutMapping("/members/{userNo}")
 	public String updateMember(@PathVariable("userNo") int userNo,
 	        @Valid @ModelAttribute("member") Member memberDetails, BindingResult result, HttpSession session, Model model) {
